@@ -1,0 +1,16 @@
+# Monorepo root
+.DS_Store
+
+# Common environment files
+.env
+.env.local
+.env.*.local
+
+# Root-level dependency directories if added later
+/node_modules
+
+# Build and cache directories that may appear at the repo root
+/.turbo
+/.next
+/dist
+/coverage
