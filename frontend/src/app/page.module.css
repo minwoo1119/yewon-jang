@@ -171,7 +171,7 @@
 .main {
   display: grid;
   gap: 88px;
-  padding: 48px 0 96px;
+  padding: 48px 0 112px;
 }
 
 .main > * {
@@ -537,7 +537,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 0 28px;
+  padding: 20px 0 28px;
   font-size: 0.9rem;
   color: var(--text-muted);
   border-top: 1px solid var(--border-subtle);
