@@ -1,0 +1,17 @@
+[Unit]
+Description=Portfolio Backend API
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/srv/portfolio/backend
+Environment=NODE_ENV=production
+EnvironmentFile=/srv/portfolio/backend/.env
+ExecStart=/usr/bin/npm run start:prod
+Restart=always
+RestartSec=5
+User=www-data
+Group=www-data
+
+[Install]
+WantedBy=multi-user.target
