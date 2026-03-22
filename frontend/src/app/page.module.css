@@ -1,142 +1,378 @@
 .page {
-  --background: #fafafa;
-  --foreground: #fff;
+  min-height: 100vh;
+  color: var(--text-primary);
+  background:
+    radial-gradient(circle at top left, rgba(192, 205, 198, 0.42), transparent 28%),
+    linear-gradient(180deg, #f5f1e7 0%, #fbf9f4 42%, #f0ede6 100%);
+}
 
-  --text-primary: #000;
-  --text-secondary: #666;
+.header,
+.main,
+.footer {
+  width: min(1120px, calc(100% - 48px));
+  margin: 0 auto;
+}
 
-  --button-primary-hover: #383838;
-  --button-secondary-hover: #f2f2f2;
-  --button-secondary-border: #ebebeb;
-
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
   display: flex;
-  flex: 1;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-family: var(--font-geist-sans);
-  background-color: var(--background);
+  justify-content: space-between;
+  padding: 24px 0 20px;
+  backdrop-filter: blur(18px);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.brandMark {
+  display: grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  border: 1px solid rgba(29, 35, 31, 0.12);
+  border-radius: 50%;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #f7f4ec;
+  background: #20342b;
+}
+
+.brandName {
+  font-size: 0.96rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+.brandRole {
+  margin-top: 3px;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.nav {
+  display: flex;
+  gap: 28px;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+.nav a {
+  transition: color 180ms ease;
+}
+
+.nav a:hover {
+  color: var(--text-primary);
 }
 
 .main {
-  display: flex;
-  flex: 1;
-  width: 100%;
-  max-width: 800px;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-between;
-  background-color: var(--foreground);
-  padding: 120px 60px;
+  display: grid;
+  gap: 40px;
+  padding: 32px 0 72px;
 }
 
-.intro {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  text-align: left;
+.hero {
+  padding: 64px;
+  border: 1px solid rgba(29, 35, 31, 0.1);
+  border-radius: 36px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.82), rgba(244, 241, 234, 0.88)),
+    #ffffff;
+  box-shadow: 0 24px 80px rgba(54, 61, 52, 0.08);
+}
+
+.eyebrow,
+.cardLabel {
+  display: inline-flex;
+  width: fit-content;
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #2c4a3c;
+  background: rgba(196, 209, 201, 0.58);
+}
+
+.hero h1 {
+  max-width: 10ch;
+  margin-top: 24px;
+  font-family: var(--font-cormorant), serif;
+  font-size: clamp(3.6rem, 7vw, 6.8rem);
+  font-weight: 600;
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+  text-wrap: balance;
+}
+
+.description {
+  max-width: 620px;
+  margin-top: 24px;
+  font-size: 1.05rem;
+  line-height: 1.9;
+  color: var(--text-muted);
+}
+
+.content {
+  display: grid;
   gap: 24px;
 }
 
-.intro h1 {
-  max-width: 320px;
-  font-size: 40px;
+.section {
+  display: grid;
+  gap: 22px;
+  scroll-margin-top: 120px;
+}
+
+.sectionHeading {
+  display: grid;
+  gap: 12px;
+}
+
+.sectionEyebrow {
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.sectionHeading h2 {
+  max-width: 720px;
+  font-family: var(--font-cormorant), serif;
+  font-size: clamp(2rem, 3.8vw, 3rem);
   font-weight: 600;
-  line-height: 48px;
-  letter-spacing: -2.4px;
-  text-wrap: balance;
-  color: var(--text-primary);
+  line-height: 1;
+  letter-spacing: -0.03em;
 }
 
-.intro p {
-  max-width: 440px;
-  font-size: 18px;
-  line-height: 32px;
-  text-wrap: balance;
-  color: var(--text-secondary);
+.featuredCard,
+.card,
+.listCard,
+.contactCard,
+.noteCard,
+.timelineItem {
+  border: 1px solid rgba(29, 35, 31, 0.1);
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.75);
+  box-shadow: 0 18px 48px rgba(54, 61, 52, 0.06);
 }
 
-.intro a {
-  font-weight: 500;
-  color: var(--text-primary);
+.featuredCard {
+  padding: 40px;
 }
 
-.ctas {
+.featuredCard h2 {
+  max-width: 720px;
+  margin-top: 18px;
+  font-family: var(--font-cormorant), serif;
+  font-size: clamp(2.2rem, 4vw, 3.4rem);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.featuredCard p:last-child,
+.card p:last-child,
+.listCard p:last-child,
+.noteCard p:last-child,
+.timelineItem p,
+.contactItem p {
+  margin-top: 16px;
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--text-muted);
+}
+
+.stack {
+  display: grid;
+  gap: 18px;
+}
+
+.listCard {
+  padding: 32px;
+}
+
+.metaRow {
   display: flex;
-  flex-direction: row;
-  width: 100%;
-  max-width: 440px;
-  gap: 16px;
-  font-size: 14px;
+  gap: 12px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
 }
 
-.ctas a {
+.metaRow span + span::before {
+  content: "•";
+  margin-right: 12px;
+}
+
+.listCard h3 {
+  margin-top: 16px;
+  font-size: 1.5rem;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.card {
+  min-height: 240px;
+  padding: 32px;
+}
+
+.card h3 {
+  margin-top: 18px;
+  font-size: 1.5rem;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+}
+
+.timeline {
+  display: grid;
+  gap: 18px;
+}
+
+.timelineItem {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 24px;
+  padding: 28px 32px;
+}
+
+.timelineYear {
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #2c4a3c;
+}
+
+.timelineItem h3,
+.noteCard h3 {
+  font-size: 1.4rem;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+}
+
+.contactCard {
+  padding: 40px;
+}
+
+.contactGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 28px;
+}
+
+.contactItem {
+  padding: 24px;
+  border-radius: 22px;
+  background: rgba(247, 244, 236, 0.9);
+}
+
+.contactItem span {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.contactItem a,
+.contactItem p {
+  display: block;
+  margin-top: 14px;
+  font-size: 1rem;
+}
+
+.bottomNote {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.noteCard {
+  min-height: 220px;
+  padding: 32px;
+}
+
+.footer {
   display: flex;
-  justify-content: center;
   align-items: center;
-  height: 40px;
-  padding: 0 16px;
-  border-radius: 128px;
-  border: 1px solid transparent;
-  transition: 0.2s;
-  cursor: pointer;
-  width: fit-content;
-  font-weight: 500;
+  justify-content: space-between;
+  padding: 0 0 32px;
+  font-size: 0.95rem;
+  color: var(--text-muted);
 }
 
-a.primary {
-  background: var(--text-primary);
-  color: var(--background);
-  gap: 8px;
-}
-
-a.secondary {
-  border-color: var(--button-secondary-border);
-}
-
-/* Enable hover only on non-touch devices */
-@media (hover: hover) and (pointer: fine) {
-  a.primary:hover {
-    background: var(--button-primary-hover);
-    border-color: transparent;
+@media (max-width: 900px) {
+  .header {
+    gap: 20px;
+    align-items: flex-start;
+    flex-direction: column;
   }
 
-  a.secondary:hover {
-    background: var(--button-secondary-hover);
-    border-color: transparent;
+  .hero {
+    padding: 40px 28px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .timelineItem {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .contactGrid,
+  .bottomNote {
+    grid-template-columns: 1fr;
+  }
+
+  .footer {
+    gap: 10px;
+    align-items: flex-start;
+    flex-direction: column;
   }
 }
 
-@media (max-width: 600px) {
-  .main {
-    padding: 48px 24px;
+@media (max-width: 640px) {
+  .header,
+  .main,
+  .footer {
+    width: min(1120px, calc(100% - 28px));
   }
 
-  .intro {
+  .nav {
+    flex-wrap: wrap;
     gap: 16px;
   }
 
-  .intro h1 {
-    font-size: 32px;
-    line-height: 40px;
-    letter-spacing: -1.92px;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  .logo {
-    filter: invert();
+  .hero {
+    border-radius: 28px;
   }
 
-  .page {
-    --background: #000;
-    --foreground: #000;
+  .featuredCard,
+  .card,
+  .listCard,
+  .contactCard,
+  .noteCard,
+  .timelineItem {
+    padding: 28px 24px;
+  }
 
-    --text-primary: #ededed;
-    --text-secondary: #999;
-
-    --button-primary-hover: #ccc;
-    --button-secondary-hover: #1a1a1a;
-    --button-secondary-border: #1a1a1a;
+  .hero h1 {
+    max-width: none;
   }
 }
