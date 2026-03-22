@@ -18,10 +18,10 @@ export default function PublicationsPage() {
                 <span>Journal Article</span>
                 <span>First Author</span>
               </div>
-              <h4>Interpretable Models for Longitudinal Evidence Synthesis</h4>
+              <h4>Mechanical Reliability Evaluation of Lightweight Composite Structures</h4>
               <p>
-                Yewon Jang, Co-author Name. <em>Journal of Responsible AI
-                Systems</em>.
+                Yewon Jang, Co-author Name. <em>Journal of Materials Processing
+                and Mechanical Design</em>.
               </p>
               <div className={styles.inlineLinks}>
                 <a href="https://doi.org/10.0000/example-2026">DOI</a>
@@ -39,10 +39,10 @@ export default function PublicationsPage() {
                 <span>Conference Paper</span>
                 <span>Co-Author</span>
               </div>
-              <h4>Robust Evaluation Pipelines for Reproducible Research Systems</h4>
+              <h4>Effects of Processing Parameters on the Mechanical Properties of Engineered Alloys</h4>
               <p>
-                Co-author Name, Yewon Jang. <em>Proceedings of the Annual
-                Conference on Research Infrastructure</em>.
+                Co-author Name, Yewon Jang. <em>Proceedings of the Korean Society
+                of Mechanical Engineers Annual Meeting</em>.
               </p>
               <div className={styles.inlineLinks}>
                 <a href="https://doi.org/10.0000/example-2025">DOI</a>

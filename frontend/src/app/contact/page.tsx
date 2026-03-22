@@ -7,7 +7,7 @@ export default function ContactPage() {
       <section className={styles.section}>
         <div className={styles.sectionHeading}>
           <p className={styles.sectionEyebrow}>Contact</p>
-          <h2>공동 연구, 발표, 학술 협업 제안을 환영합니다.</h2>
+          <h2>재료, 소재, 기계공학 관련 공동 연구와 학술 협업을 환영합니다.</h2>
         </div>
 
         <div className={styles.contactCard}>
@@ -19,7 +19,7 @@ export default function ContactPage() {
 
             <article className={styles.contactItem}>
               <span>Affiliation</span>
-              <p>Department / Lab / Institution Name</p>
+              <p>Department of Mechanical Engineering / Lab / Institution Name</p>
             </article>
 
             <article className={styles.contactItem}>

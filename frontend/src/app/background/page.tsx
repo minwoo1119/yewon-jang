@@ -14,11 +14,11 @@ export default function BackgroundPage() {
           <article className={styles.timelineItem}>
             <span className={styles.timelineYear}>2024 - Present</span>
             <div>
-              <h3>M.S. in Computer Science</h3>
-              <p>Institution Name, Human-Centered AI Lab</p>
+              <h3>M.S. in Mechanical Engineering</h3>
+              <p>Institution Name, Materials and Mechanics Laboratory</p>
               <p>
-                Researching evaluation frameworks for collaborative AI systems
-                and interpretable machine learning.
+                Conducting research on materials performance, structural
+                reliability, and process-aware mechanical design.
               </p>
             </div>
           </article>
@@ -27,10 +27,10 @@ export default function BackgroundPage() {
             <span className={styles.timelineYear}>2022 - 2024</span>
             <div>
               <h3>Research Assistant</h3>
-              <p>Department of Computer Science, Institution Name</p>
+              <p>Department of Mechanical Engineering, Institution Name</p>
               <p>
-                Supported data curation, experimental design, and publication
-                development for longitudinal analysis projects.
+                Supported specimen preparation, mechanical testing, and analysis
+                for projects in materials processing and structural evaluation.
               </p>
             </div>
           </article>
@@ -38,11 +38,11 @@ export default function BackgroundPage() {
           <article className={styles.timelineItem}>
             <span className={styles.timelineYear}>2018 - 2022</span>
             <div>
-              <h3>B.S. in Software and Data Science</h3>
+              <h3>B.S. in Mechanical Engineering</h3>
               <p>Institution Name</p>
               <p>
-                Built a foundation in machine learning, statistical modeling,
-                and research communication.
+                Built a foundation in solid mechanics, thermofluids, materials
+                science, and engineering design.
               </p>
             </div>
           </article>

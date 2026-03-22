@@ -14,11 +14,11 @@ export default function ProjectsPage() {
           <article className={styles.projectCard}>
             <div className={styles.projectImage} aria-hidden="true" />
             <div className={styles.projectBody}>
-              <p className={styles.cardLabel}>Research Program</p>
-              <h3>Human-Centered Analysis Workflow Design</h3>
+              <p className={styles.cardLabel}>Materials Research</p>
+              <h3>Fatigue and Durability Assessment of Structural Materials</h3>
               <p>
-                Designing interpretable interfaces for analysts who need to
-                inspect evidence, models, and uncertainty in the same workflow.
+                Evaluating cyclic loading behavior and long-term durability of
+                candidate materials for mechanically demanding applications.
               </p>
             </div>
           </article>
@@ -26,11 +26,11 @@ export default function ProjectsPage() {
           <article className={styles.projectCard}>
             <div className={styles.projectImageAlt} aria-hidden="true" />
             <div className={styles.projectBody}>
-              <p className={styles.cardLabel}>Infrastructure</p>
-              <h3>Reproducible Evaluation Toolkit</h3>
+              <p className={styles.cardLabel}>Manufacturing Study</p>
+              <h3>Process Optimization for High-Performance Components</h3>
               <p>
-                Building lightweight evaluation infrastructure for experiments,
-                reporting, and publication-ready result tracking.
+                Studying how forming or additive manufacturing parameters affect
+                microstructure, dimensional stability, and final performance.
               </p>
             </div>
           </article>
