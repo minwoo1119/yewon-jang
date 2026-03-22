@@ -29,8 +29,16 @@ export default function SiteShell({ children }: SiteShellProps) {
       <main className={styles.main}>{children}</main>
 
       <footer className={styles.footer}>
-        <p>© 2026 Yewon Jang. Built for a clear academic presentation.</p>
-        <a href="mailto:contact@example.com">contact@example.com</a>
+        <div className={styles.footerIdentity}>
+          <Link href="/manage" className={styles.footerName}>
+            Yewon Jang
+          </Link>
+          <p>Mechanical Engineering Portfolio</p>
+        </div>
+        <div className={styles.footerMeta}>
+          <p>© 2026 Yewon Jang</p>
+          <a href="mailto:contact@example.com">contact@example.com</a>
+        </div>
       </footer>
     </div>
   );

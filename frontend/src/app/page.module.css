@@ -415,6 +415,32 @@
   border-top: 1px solid var(--border-subtle);
 }
 
+.footerIdentity,
+.footerMeta {
+  display: grid;
+  gap: 4px;
+}
+
+.footerMeta {
+  justify-items: end;
+}
+
+.footerName {
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--accent);
+  transition: opacity 180ms ease;
+}
+
+.footerName:hover,
+.footerMeta a:hover {
+  opacity: 0.72;
+}
+
+.footerMeta a {
+  transition: opacity 180ms ease;
+}
+
 @media (max-width: 960px) {
   .header {
     gap: 16px;
@@ -472,5 +498,9 @@
     gap: 8px;
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .footerMeta {
+    justify-items: start;
   }
 }
