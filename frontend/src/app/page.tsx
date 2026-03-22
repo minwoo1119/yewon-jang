@@ -11,7 +11,14 @@ export default function Home() {
     <SiteShell>
       <section className={styles.hero}>
         <div className={styles.portraitFrame} aria-hidden="true">
-          <div className={styles.portrait} />
+          <div
+            className={styles.portrait}
+            style={
+              data.heroImageUrl
+                ? { backgroundImage: `url(${data.heroImageUrl})` }
+                : undefined
+            }
+          />
         </div>
 
         <div className={styles.heroContent}>

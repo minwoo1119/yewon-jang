@@ -33,6 +33,7 @@ export type ProjectItem = {
   label: string;
   title: string;
   description: string;
+  imageUrl?: string;
 };
 
 export type PublicationItem = {
@@ -56,6 +57,7 @@ export type PortfolioData = {
   name: string;
   heroRole: string;
   heroDescription: string;
+  heroImageUrl?: string;
   profileLinks: LinkItem[];
   aboutTitle: string;
   philosophy: string;
@@ -87,6 +89,7 @@ const koData: PortfolioData = {
   heroRole: "Graduate Researcher, Mechanical Engineering",
   heroDescription:
     "재료, 첨단 제조, 기계 시스템을 중심으로 신뢰성 있는 실험과 실제 공학 적용을 연결하는 연구를 수행합니다.",
+  heroImageUrl: "",
   profileLinks: [
     { label: "Google Scholar", href: "https://scholar.google.com" },
     { label: "ORCID", href: "https://orcid.org" },
@@ -156,12 +159,14 @@ const koData: PortfolioData = {
       title: "Fatigue and Durability Assessment of Structural Materials",
       description:
         "기계적 하중이 큰 환경에 적용되는 재료의 반복 하중 거동과 장기 내구성을 평가합니다.",
+      imageUrl: "",
     },
     {
       label: "Manufacturing Study",
       title: "Process Optimization for High-Performance Components",
       description:
         "성형 및 적층 제조 조건이 미세조직, 치수 안정성, 최종 성능에 미치는 영향을 분석합니다.",
+      imageUrl: "",
     },
   ],
   publicationsTitle: "연도별로 정리한 주요 논문과 연구 산출물입니다.",
@@ -213,6 +218,7 @@ const enData: PortfolioData = {
   heroRole: "Graduate Researcher, Mechanical Engineering",
   heroDescription:
     "Research in materials, advanced manufacturing, and mechanical systems with an emphasis on reliable experiments and practical engineering applications.",
+  heroImageUrl: "",
   profileLinks: [
     { label: "Google Scholar", href: "https://scholar.google.com" },
     { label: "ORCID", href: "https://orcid.org" },
@@ -287,12 +293,14 @@ const enData: PortfolioData = {
       title: "Fatigue and Durability Assessment of Structural Materials",
       description:
         "Evaluating cyclic loading behavior and long-term durability of candidate materials for mechanically demanding applications.",
+      imageUrl: "",
     },
     {
       label: "Manufacturing Study",
       title: "Process Optimization for High-Performance Components",
       description:
         "Studying how forming or additive manufacturing parameters affect microstructure, dimensional stability, and final performance.",
+      imageUrl: "",
     },
   ],
   publicationsTitle:

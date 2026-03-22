@@ -20,6 +20,11 @@ export default function ProjectsPage() {
             <article key={project.title} className={styles.projectCard}>
               <div
                 className={index % 2 === 0 ? styles.projectImage : styles.projectImageAlt}
+                style={
+                  project.imageUrl
+                    ? { backgroundImage: `url(${project.imageUrl})` }
+                    : undefined
+                }
                 aria-hidden="true"
               />
               <div className={styles.projectBody}>

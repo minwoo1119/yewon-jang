@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useId, useState } from "react";
 import SiteShell from "../components/site-shell";
 import styles from "../page.module.css";
 import {
@@ -33,6 +33,84 @@ const sections: { id: ManageSection; label: string }[] = [
   { id: "contact", label: "연락처·푸터" },
 ];
 
+type ImageUploadFieldProps = {
+  label: string;
+  value?: string;
+  onChange: (value: string) => void;
+};
+
+function fileToDataUrl(file: File) {
+  return new Promise<string>((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result));
+    reader.onerror = () => reject(new Error("Failed to read file."));
+    reader.readAsDataURL(file);
+  });
+}
+
+function ImageUploadField({ label, value, onChange }: ImageUploadFieldProps) {
+  const inputId = useId();
+
+  const handleFile = async (file?: File) => {
+    if (!file) return;
+    const dataUrl = await fileToDataUrl(file);
+    onChange(dataUrl);
+  };
+
+  return (
+    <div className={styles.formField}>
+      <span>{label}</span>
+      <div
+        className={styles.uploadField}
+        onDragOver={(event) => event.preventDefault()}
+        onDrop={async (event) => {
+          event.preventDefault();
+          await handleFile(event.dataTransfer.files?.[0]);
+        }}
+      >
+        <input
+          id={inputId}
+          type="file"
+          accept="image/*"
+          className={styles.uploadInput}
+          onChange={async (event) => {
+            await handleFile(event.target.files?.[0]);
+            event.target.value = "";
+          }}
+        />
+        <label htmlFor={inputId} className={styles.uploadDropzone}>
+          {value ? (
+            <div className={styles.uploadPreviewWrap}>
+              <div
+                className={styles.uploadPreview}
+                style={{ backgroundImage: `url(${value})` }}
+              />
+              <div className={styles.uploadCopy}>
+                <strong>Image selected</strong>
+                <span>Click or drag another file to replace it.</span>
+              </div>
+            </div>
+          ) : (
+            <div className={styles.uploadCopy}>
+              <strong>Drop an image here</strong>
+              <span>or click to browse from your device.</span>
+            </div>
+          )}
+        </label>
+        {value ? (
+          <button
+            type="button"
+            className={styles.ghostButton}
+            onClick={() => onChange("")}
+          >
+            이미지 제거
+          </button>
+        ) : null}
+      </div>
+    </div>
+  );
+}
+
 export default function ManagePage() {
   const { content, locale, setContent, resetContent } = usePortfolio();
   const [draft, setDraft] = useState(content);
@@ -40,6 +118,10 @@ export default function ManagePage() {
   const [isUnlocked, setIsUnlocked] = useState(false);
   const [activeSection, setActiveSection] = useState<ManageSection>("basic");
   const [editingLocale, setEditingLocale] = useState<Locale>(locale);
+  const [skillInput, setSkillInput] = useState<Record<Locale, string>>({
+    ko: "",
+    en: "",
+  });
 
   const current = draft[editingLocale];
 
@@ -115,6 +197,14 @@ export default function ManagePage() {
     resetContent();
   };
 
+  const addSkill = () => {
+    const value = skillInput[editingLocale].trim();
+    if (!value) return;
+
+    updateField("skills", [...current.skills, value]);
+    setSkillInput((state) => ({ ...state, [editingLocale]: "" }));
+  };
+
   if (!isUnlocked) {
     return (
       <SiteShell>
@@ -124,8 +214,16 @@ export default function ManagePage() {
             <h2>관리 페이지 접근을 위해 암호를 입력하세요.</h2>
           </div>
 
-          <form className={styles.authCard} onSubmit={handleUnlock}>
-            <label className={styles.formField}>
+          <form className={styles.authInline} onSubmit={handleUnlock}>
+            <div className={styles.authIntro}>
+              <p className={styles.cardLabel}>Access</p>
+              <p className={styles.formHint}>
+                현재는 백엔드 인증 연결 전 단계라서 입력 UI만 제공합니다. 이후 서버
+                검증 로직을 연결하면 됩니다.
+              </p>
+            </div>
+
+            <label className={styles.authField}>
               <span>Access Password</span>
               <input
                 type="password"
@@ -134,11 +232,8 @@ export default function ManagePage() {
                 placeholder="Enter password"
               />
             </label>
-            <p className={styles.formHint}>
-              현재는 백엔드 인증 연결 전 단계라서 입력 UI만 제공됩니다. 이후 서버
-              검증 로직을 연결하면 됩니다.
-            </p>
-            <button type="submit" className={styles.primaryButton}>
+
+            <button type="submit" className={styles.authButton}>
               Continue
             </button>
           </form>
@@ -226,6 +321,11 @@ export default function ManagePage() {
                   rows={4}
                 />
               </label>
+              <ImageUploadField
+                label="Profile Image"
+                value={current.heroImageUrl}
+                onChange={(value) => updateField("heroImageUrl", value)}
+              />
             </article>
 
             <article className={styles.managePanel}>
@@ -327,22 +427,47 @@ export default function ManagePage() {
                   rows={3}
                 />
               </label>
-              <label className={styles.formField}>
+              <div className={styles.formField}>
                 <span>Skills</span>
-                <textarea
-                  value={current.skills.join("\n")}
-                  onChange={(event) =>
-                    updateField(
-                      "skills",
-                      event.target.value
-                        .split("\n")
-                        .map((item) => item.trim())
-                        .filter(Boolean),
-                    )
-                  }
-                  rows={6}
-                />
-              </label>
+                <div className={styles.skillComposer}>
+                  <div className={styles.skillTokenList}>
+                    {current.skills.map((skill, index) => (
+                      <button
+                        key={`${skill}-${index}`}
+                        type="button"
+                        className={styles.skillToken}
+                        onClick={() =>
+                          updateField(
+                            "skills",
+                            current.skills.filter((_, skillIndex) => skillIndex !== index),
+                          )
+                        }
+                      >
+                        <span>{skill}</span>
+                        <span className={styles.skillTokenClose} aria-hidden="true">
+                          ×
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+                  <input
+                    value={skillInput[editingLocale]}
+                    onChange={(event) =>
+                      setSkillInput((state) => ({
+                        ...state,
+                        [editingLocale]: event.target.value,
+                      }))
+                    }
+                    onKeyDown={(event) => {
+                      if (event.key === "Enter") {
+                        event.preventDefault();
+                        addSkill();
+                      }
+                    }}
+                    placeholder="Type a skill and press Enter"
+                  />
+                </div>
+              </div>
             </article>
 
             <article className={styles.managePanel}>
@@ -544,6 +669,7 @@ export default function ManagePage() {
                       label: "",
                       title: "",
                       description: "",
+                      imageUrl: "",
                     })
                   }
                 >
@@ -594,6 +720,16 @@ export default function ManagePage() {
                       }
                     />
                   </label>
+                  <ImageUploadField
+                    label="Project Image"
+                    value={item.imageUrl}
+                    onChange={(value) =>
+                      updateArrayItem<ProjectItem>("projects", index, (current) => ({
+                        ...current,
+                        imageUrl: value,
+                      }))
+                    }
+                  />
                   <label className={styles.formField}>
                     <span>Description</span>
                     <textarea
