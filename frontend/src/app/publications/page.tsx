@@ -1,56 +1,44 @@
+"use client";
+
 import SiteShell from "../components/site-shell";
 import styles from "../page.module.css";
+import { usePortfolio } from "../portfolio-store";
 
 export default function PublicationsPage() {
+  const { data } = usePortfolio();
+  const publicationYears = [...new Set(data.publications.map((item) => item.year))];
+
   return (
     <SiteShell>
       <section className={styles.section}>
         <div className={styles.sectionHeading}>
           <p className={styles.sectionEyebrow}>Publications</p>
-          <h2>연도별로 정리한 주요 논문과 연구 산출물입니다.</h2>
+          <h2>{data.publicationsTitle}</h2>
         </div>
 
-        <div className={styles.publicationYear}>
-          <h3>2026</h3>
-          <div className={styles.publicationList}>
-            <article className={styles.listCard}>
-              <div className={styles.metaRow}>
-                <span>Journal Article</span>
-                <span>First Author</span>
-              </div>
-              <h4>Mechanical Reliability Evaluation of Lightweight Composite Structures</h4>
-              <p>
-                Yewon Jang, Co-author Name. <em>Journal of Materials Processing
-                and Mechanical Design</em>.
-              </p>
-              <div className={styles.inlineLinks}>
-                <a href="https://doi.org/10.0000/example-2026">DOI</a>
-                <a href="https://example.com/paper-2026">Paper</a>
-              </div>
-            </article>
+        {publicationYears.map((year) => (
+          <div key={year} className={styles.publicationYear}>
+            <h3>{year}</h3>
+            <div className={styles.publicationList}>
+              {data.publications
+                .filter((item) => item.year === year)
+                .map((item) => (
+                  <article key={`${item.year}-${item.title}`} className={styles.listCard}>
+                    <div className={styles.metaRow}>
+                      <span>{item.type}</span>
+                      <span>{item.role}</span>
+                    </div>
+                    <h4>{item.title}</h4>
+                    <p>{item.citation}</p>
+                    <div className={styles.inlineLinks}>
+                      <a href={item.doi}>DOI</a>
+                      <a href={item.paperUrl}>Paper</a>
+                    </div>
+                  </article>
+                ))}
+            </div>
           </div>
-        </div>
-
-        <div className={styles.publicationYear}>
-          <h3>2025</h3>
-          <div className={styles.publicationList}>
-            <article className={styles.listCard}>
-              <div className={styles.metaRow}>
-                <span>Conference Paper</span>
-                <span>Co-Author</span>
-              </div>
-              <h4>Effects of Processing Parameters on the Mechanical Properties of Engineered Alloys</h4>
-              <p>
-                Co-author Name, Yewon Jang. <em>Proceedings of the Korean Society
-                of Mechanical Engineers Annual Meeting</em>.
-              </p>
-              <div className={styles.inlineLinks}>
-                <a href="https://doi.org/10.0000/example-2025">DOI</a>
-                <a href="https://example.com/paper-2025">Paper</a>
-              </div>
-            </article>
-          </div>
-        </div>
+        ))}
       </section>
     </SiteShell>
   );

@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import styles from "../page.module.css";
+import { usePortfolio } from "../portfolio-store";
 
 type SiteShellProps = {
   children: React.ReactNode;
@@ -14,6 +17,9 @@ const navItems = [
 ];
 
 export default function SiteShell({ children }: SiteShellProps) {
+  const { data } = usePortfolio();
+  const emailItem = data.contactItems.find((item) => item.label === "Email");
+
   return (
     <div className={styles.page}>
       <header className={styles.header}>
@@ -31,13 +37,17 @@ export default function SiteShell({ children }: SiteShellProps) {
       <footer className={styles.footer}>
         <div className={styles.footerIdentity}>
           <Link href="/manage" className={styles.footerName}>
-            Yewon Jang
+            {data.name}
           </Link>
-          <p>Mechanical Engineering Portfolio</p>
+          <p>{data.footerRole}</p>
         </div>
         <div className={styles.footerMeta}>
-          <p>© 2026 Yewon Jang</p>
-          <a href="mailto:contact@example.com">contact@example.com</a>
+          <p>{data.footerCopyright}</p>
+          {emailItem?.href ? (
+            <a href={emailItem.href}>{emailItem.value}</a>
+          ) : (
+            <p>{emailItem?.value}</p>
+          )}
         </div>
       </footer>
     </div>

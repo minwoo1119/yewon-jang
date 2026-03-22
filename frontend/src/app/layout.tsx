@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Manrope } from "next/font/google";
+import { PortfolioProvider } from "./portfolio-store";
 import "./globals.css";
 
 const manrope = Manrope({
@@ -19,7 +20,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" className={manrope.variable}>
-      <body>{children}</body>
+      <body>
+        <PortfolioProvider>{children}</PortfolioProvider>
+      </body>
     </html>
   );
 }

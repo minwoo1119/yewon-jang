@@ -441,6 +441,102 @@
   transition: opacity 180ms ease;
 }
 
+.authCard,
+.managePanel {
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  background: var(--surface);
+}
+
+.authCard {
+  display: grid;
+  gap: 18px;
+  width: min(520px, 100%);
+  padding: 28px;
+}
+
+.manageLayout {
+  display: grid;
+  gap: 20px;
+}
+
+.managePanel {
+  display: grid;
+  gap: 18px;
+  padding: 24px;
+}
+
+.formGroup {
+  display: grid;
+  gap: 14px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.formField {
+  display: grid;
+  gap: 8px;
+}
+
+.formField span {
+  font-size: 0.84rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+}
+
+.formField input,
+.formField textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  font: inherit;
+  color: var(--text-primary);
+  background: #fff;
+  resize: vertical;
+}
+
+.formHint {
+  font-size: 0.94rem;
+  line-height: 1.7;
+  color: var(--text-muted);
+}
+
+.manageActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.primaryButton,
+.secondaryButton {
+  min-height: 42px;
+  padding: 0 16px;
+  border-radius: 4px;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 180ms ease;
+}
+
+.primaryButton {
+  border: 1px solid var(--accent);
+  color: #fff;
+  background: var(--accent);
+}
+
+.secondaryButton {
+  border: 1px solid var(--border-strong);
+  color: var(--accent);
+  background: transparent;
+}
+
+.primaryButton:hover,
+.secondaryButton:hover {
+  opacity: 0.8;
+}
+
 @media (max-width: 960px) {
   .header {
     gap: 16px;
@@ -480,7 +576,9 @@
   .panel,
   .listCard,
   .contactCard,
-  .projectBody {
+  .projectBody,
+  .authCard,
+  .managePanel {
     padding: 24px 20px;
   }
 

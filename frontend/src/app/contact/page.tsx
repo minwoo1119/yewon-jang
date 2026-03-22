@@ -1,31 +1,28 @@
+"use client";
+
 import SiteShell from "../components/site-shell";
 import styles from "../page.module.css";
+import { usePortfolio } from "../portfolio-store";
 
 export default function ContactPage() {
+  const { data } = usePortfolio();
+
   return (
     <SiteShell>
       <section className={styles.section}>
         <div className={styles.sectionHeading}>
           <p className={styles.sectionEyebrow}>Contact</p>
-          <h2>재료, 소재, 기계공학 관련 공동 연구와 학술 협업을 환영합니다.</h2>
+          <h2>{data.contactTitle}</h2>
         </div>
 
         <div className={styles.contactCard}>
           <div className={styles.contactGrid}>
-            <article className={styles.contactItem}>
-              <span>Email</span>
-              <a href="mailto:contact@example.com">contact@example.com</a>
-            </article>
-
-            <article className={styles.contactItem}>
-              <span>Affiliation</span>
-              <p>Department of Mechanical Engineering / Lab / Institution Name</p>
-            </article>
-
-            <article className={styles.contactItem}>
-              <span>Office</span>
-              <p>Seoul, Republic of Korea</p>
-            </article>
+            {data.contactItems.map((item) => (
+              <article key={item.label} className={styles.contactItem}>
+                <span>{item.label}</span>
+                {item.href ? <a href={item.href}>{item.value}</a> : <p>{item.value}</p>}
+              </article>
+            ))}
           </div>
         </div>
       </section>
