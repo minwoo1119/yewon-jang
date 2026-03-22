@@ -15,15 +15,13 @@ export default function ContactPage() {
           <h2>{data.contactTitle}</h2>
         </div>
 
-        <div className={styles.contactCard}>
-          <div className={styles.contactGrid}>
-            {data.contactItems.map((item) => (
-              <article key={item.label} className={styles.contactItem}>
-                <span>{item.label}</span>
-                {item.href ? <a href={item.href}>{item.value}</a> : <p>{item.value}</p>}
-              </article>
-            ))}
-          </div>
+        <div className={styles.contactGrid}>
+          {data.contactItems.map((item) => (
+            <article key={item.label} className={styles.contactItem}>
+              <span>{item.label}</span>
+              {item.href ? <a href={item.href}>{item.value}</a> : <p>{item.value}</p>}
+            </article>
+          ))}
         </div>
       </section>
     </SiteShell>

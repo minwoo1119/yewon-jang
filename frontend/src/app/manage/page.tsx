@@ -4,7 +4,8 @@ import { useState } from "react";
 import SiteShell from "../components/site-shell";
 import styles from "../page.module.css";
 import {
-  defaultPortfolioData,
+  defaultPortfolioContent,
+  type Locale,
   usePortfolio,
   type ContactItem,
   type LinkItem,
@@ -33,14 +34,23 @@ const sections: { id: ManageSection; label: string }[] = [
 ];
 
 export default function ManagePage() {
-  const { data, setData, resetData } = usePortfolio();
-  const [draft, setDraft] = useState<PortfolioData>(data);
+  const { content, locale, setContent, resetContent } = usePortfolio();
+  const [draft, setDraft] = useState(content);
   const [password, setPassword] = useState("");
   const [isUnlocked, setIsUnlocked] = useState(false);
   const [activeSection, setActiveSection] = useState<ManageSection>("basic");
+  const [editingLocale, setEditingLocale] = useState<Locale>(locale);
+
+  const current = draft[editingLocale];
 
   const updateField = <K extends keyof PortfolioData>(key: K, value: PortfolioData[K]) => {
-    setDraft((current) => ({ ...current, [key]: value }));
+    setDraft((currentDraft) => ({
+      ...currentDraft,
+      [editingLocale]: {
+        ...currentDraft[editingLocale],
+        [key]: value,
+      },
+    }));
   };
 
   const updateArrayItem = <T,>(
@@ -48,51 +58,61 @@ export default function ManagePage() {
     index: number,
     updater: (item: T) => T,
   ) => {
-    setDraft((current) => {
-      const items = current[key] as T[];
+    setDraft((currentDraft) => {
+      const localeData = currentDraft[editingLocale];
+      const items = localeData[key] as T[];
       return {
-        ...current,
-        [key]: items.map((item, itemIndex) =>
-          itemIndex === index ? updater(item) : item,
-        ),
+        ...currentDraft,
+        [editingLocale]: {
+          ...localeData,
+          [key]: items.map((item, itemIndex) =>
+            itemIndex === index ? updater(item) : item,
+          ),
+        },
       };
     });
   };
 
   const addArrayItem = <T,>(key: keyof PortfolioData, item: T) => {
-    setDraft((current) => ({
-      ...current,
-      [key]: [...((current[key] as T[]) ?? []), item],
-    }));
+    setDraft((currentDraft) => {
+      const localeData = currentDraft[editingLocale];
+      return {
+        ...currentDraft,
+        [editingLocale]: {
+          ...localeData,
+          [key]: [...((localeData[key] as T[]) ?? []), item],
+        },
+      };
+    });
   };
 
   const removeArrayItem = <T,>(key: keyof PortfolioData, index: number) => {
-    setDraft((current) => ({
-      ...current,
-      [key]: (current[key] as T[]).filter((_, itemIndex) => itemIndex !== index),
-    }));
+    setDraft((currentDraft) => {
+      const localeData = currentDraft[editingLocale];
+      return {
+        ...currentDraft,
+        [editingLocale]: {
+          ...localeData,
+          [key]: (localeData[key] as T[]).filter((_, itemIndex) => itemIndex !== index),
+        },
+      };
+    });
   };
-
-  const splitLines = (value: string) =>
-    value
-      .split("\n")
-      .map((item) => item.trim())
-      .filter(Boolean);
 
   const handleUnlock = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!password.trim()) return;
-    setDraft(data);
+    setDraft(content);
     setIsUnlocked(true);
   };
 
   const handleSave = () => {
-    setData(draft);
+    setContent(draft);
   };
 
   const handleReset = () => {
-    setDraft(defaultPortfolioData);
-    resetData();
+    setDraft(defaultPortfolioContent);
+    resetContent();
   };
 
   if (!isUnlocked) {
@@ -135,6 +155,27 @@ export default function ManagePage() {
           <h2>섹션별로 내용을 나눠서 수정할 수 있도록 정리했습니다.</h2>
         </div>
 
+        <div className={styles.manageLanguageTabs}>
+          <button
+            type="button"
+            className={
+              editingLocale === "ko" ? styles.manageTabActive : styles.manageTab
+            }
+            onClick={() => setEditingLocale("ko")}
+          >
+            한국어
+          </button>
+          <button
+            type="button"
+            className={
+              editingLocale === "en" ? styles.manageTabActive : styles.manageTab
+            }
+            onClick={() => setEditingLocale("en")}
+          >
+            English
+          </button>
+        </div>
+
         <div className={styles.manageTabs}>
           {sections.map((section) => (
             <button
@@ -159,28 +200,28 @@ export default function ManagePage() {
               <label className={styles.formField}>
                 <span>Eyebrow</span>
                 <input
-                  value={draft.heroEyebrow}
+                  value={current.heroEyebrow}
                   onChange={(event) => updateField("heroEyebrow", event.target.value)}
                 />
               </label>
               <label className={styles.formField}>
                 <span>Name</span>
                 <input
-                  value={draft.name}
+                  value={current.name}
                   onChange={(event) => updateField("name", event.target.value)}
                 />
               </label>
               <label className={styles.formField}>
                 <span>Role</span>
                 <input
-                  value={draft.heroRole}
+                  value={current.heroRole}
                   onChange={(event) => updateField("heroRole", event.target.value)}
                 />
               </label>
               <label className={styles.formField}>
                 <span>Hero Description</span>
                 <textarea
-                  value={draft.heroDescription}
+                  value={current.heroDescription}
                   onChange={(event) => updateField("heroDescription", event.target.value)}
                   rows={4}
                 />
@@ -200,7 +241,7 @@ export default function ManagePage() {
                   링크 추가
                 </button>
               </div>
-              {draft.profileLinks.map((item, index) => (
+              {current.profileLinks.map((item, index) => (
                 <div key={`${item.label}-${index}`} className={styles.formGroup}>
                   <div className={styles.itemHeader}>
                     <p className={styles.itemIndex}>링크 {index + 1}</p>
@@ -249,7 +290,7 @@ export default function ManagePage() {
               <label className={styles.formField}>
                 <span>About Title</span>
                 <textarea
-                  value={draft.aboutTitle}
+                  value={current.aboutTitle}
                   onChange={(event) => updateField("aboutTitle", event.target.value)}
                   rows={3}
                 />
@@ -257,7 +298,7 @@ export default function ManagePage() {
               <label className={styles.formField}>
                 <span>Research Philosophy</span>
                 <textarea
-                  value={draft.philosophy}
+                  value={current.philosophy}
                   onChange={(event) => updateField("philosophy", event.target.value)}
                   rows={5}
                 />
@@ -265,15 +306,23 @@ export default function ManagePage() {
               <label className={styles.formField}>
                 <span>Interests</span>
                 <textarea
-                  value={draft.interests.join("\n")}
-                  onChange={(event) => updateField("interests", splitLines(event.target.value))}
+                  value={current.interests.join("\n")}
+                  onChange={(event) =>
+                    updateField(
+                      "interests",
+                      event.target.value
+                        .split("\n")
+                        .map((item) => item.trim())
+                        .filter(Boolean),
+                    )
+                  }
                   rows={5}
                 />
               </label>
               <label className={styles.formField}>
                 <span>Skills Title</span>
                 <textarea
-                  value={draft.skillsTitle}
+                  value={current.skillsTitle}
                   onChange={(event) => updateField("skillsTitle", event.target.value)}
                   rows={3}
                 />
@@ -281,8 +330,16 @@ export default function ManagePage() {
               <label className={styles.formField}>
                 <span>Skills</span>
                 <textarea
-                  value={draft.skills.join("\n")}
-                  onChange={(event) => updateField("skills", splitLines(event.target.value))}
+                  value={current.skills.join("\n")}
+                  onChange={(event) =>
+                    updateField(
+                      "skills",
+                      event.target.value
+                        .split("\n")
+                        .map((item) => item.trim())
+                        .filter(Boolean),
+                    )
+                  }
                   rows={6}
                 />
               </label>
@@ -292,7 +349,7 @@ export default function ManagePage() {
               <div className={styles.panelHeader}>
                 <div>
                   <p className={styles.cardLabel}>최근 연구 카드</p>
-                  <p className={styles.formHint}>{draft.recentResearchTitle}</p>
+                  <p className={styles.formHint}>{current.recentResearchTitle}</p>
                 </div>
                 <button
                   type="button"
@@ -311,14 +368,14 @@ export default function ManagePage() {
               <label className={styles.formField}>
                 <span>Recent Research Title</span>
                 <textarea
-                  value={draft.recentResearchTitle}
+                value={current.recentResearchTitle}
                   onChange={(event) =>
                     updateField("recentResearchTitle", event.target.value)
                   }
                   rows={3}
                 />
               </label>
-              {draft.recentResearch.map((item, index) => (
+              {current.recentResearch.map((item, index) => (
                 <div key={`${item.title}-${index}`} className={styles.formGroup}>
                   <div className={styles.itemHeader}>
                     <p className={styles.itemIndex}>카드 {index + 1}</p>
@@ -400,12 +457,12 @@ export default function ManagePage() {
               <label className={styles.formField}>
                 <span>Section Title</span>
                 <textarea
-                  value={draft.backgroundTitle}
+                  value={current.backgroundTitle}
                   onChange={(event) => updateField("backgroundTitle", event.target.value)}
                   rows={3}
                 />
               </label>
-              {draft.backgroundItems.map((item, index) => (
+              {current.backgroundItems.map((item, index) => (
                 <div key={`${item.year}-${item.title}-${index}`} className={styles.formGroup}>
                   <div className={styles.itemHeader}>
                     <p className={styles.itemIndex}>이력 {index + 1}</p>
@@ -496,12 +553,12 @@ export default function ManagePage() {
               <label className={styles.formField}>
                 <span>Section Title</span>
                 <textarea
-                  value={draft.projectsTitle}
+                  value={current.projectsTitle}
                   onChange={(event) => updateField("projectsTitle", event.target.value)}
                   rows={3}
                 />
               </label>
-              {draft.projects.map((item, index) => (
+              {current.projects.map((item, index) => (
                 <div key={`${item.label}-${item.title}-${index}`} className={styles.formGroup}>
                   <div className={styles.itemHeader}>
                     <p className={styles.itemIndex}>프로젝트 {index + 1}</p>
@@ -582,14 +639,14 @@ export default function ManagePage() {
               <label className={styles.formField}>
                 <span>Section Title</span>
                 <textarea
-                  value={draft.publicationsTitle}
+                  value={current.publicationsTitle}
                   onChange={(event) =>
                     updateField("publicationsTitle", event.target.value)
                   }
                   rows={3}
                 />
               </label>
-              {draft.publications.map((item, index) => (
+              {current.publications.map((item, index) => (
                 <div key={`${item.year}-${item.title}-${index}`} className={styles.formGroup}>
                   <div className={styles.itemHeader}>
                     <p className={styles.itemIndex}>논문 {index + 1}</p>
@@ -716,12 +773,12 @@ export default function ManagePage() {
               <label className={styles.formField}>
                 <span>Contact Title</span>
                 <textarea
-                  value={draft.contactTitle}
+                  value={current.contactTitle}
                   onChange={(event) => updateField("contactTitle", event.target.value)}
                   rows={3}
                 />
               </label>
-              {draft.contactItems.map((item, index) => (
+              {current.contactItems.map((item, index) => (
                 <div key={`${item.label}-${item.value}-${index}`} className={styles.formGroup}>
                   <div className={styles.itemHeader}>
                     <p className={styles.itemIndex}>연락처 {index + 1}</p>
@@ -778,14 +835,14 @@ export default function ManagePage() {
               <label className={styles.formField}>
                 <span>Footer Role</span>
                 <input
-                  value={draft.footerRole}
+                  value={current.footerRole}
                   onChange={(event) => updateField("footerRole", event.target.value)}
                 />
               </label>
               <label className={styles.formField}>
                 <span>Copyright</span>
                 <input
-                  value={draft.footerCopyright}
+                  value={current.footerCopyright}
                   onChange={(event) => updateField("footerCopyright", event.target.value)}
                 />
               </label>
