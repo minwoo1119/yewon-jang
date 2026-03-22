@@ -24,25 +24,6 @@
   border-bottom: 1px solid var(--border-subtle);
 }
 
-.brand {
-  display: flex;
-  align-items: center;
-}
-
-.brandName {
-  font-size: 0.95rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--accent);
-}
-
-.brandRole {
-  margin-top: 3px;
-  font-size: 0.82rem;
-  color: var(--text-muted);
-}
-
 .nav {
   display: flex;
   gap: 24px;

@@ -4,12 +4,6 @@ export default function Home() {
   return (
     <div className={styles.page}>
       <header className={styles.header}>
-        <div className={styles.brand}>
-          <div>
-            <p className={styles.brandName}>The Scholarly Editorial</p>
-            <p className={styles.brandRole}>Yewon Jang Research Portfolio</p>
-          </div>
-        </div>
         <nav className={styles.nav}>
           <a href="#about">소개</a>
           <a href="#background">학력·경력</a>
