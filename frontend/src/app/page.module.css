@@ -17,7 +17,7 @@
   z-index: 10;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   padding: 18px 0;
   background: rgba(248, 249, 250, 0.96);
   backdrop-filter: blur(8px);
@@ -46,6 +46,10 @@
   display: grid;
   gap: 88px;
   padding: 48px 0 96px;
+}
+
+.main > * {
+  width: 100%;
 }
 
 .hero {
@@ -414,8 +418,7 @@
 @media (max-width: 960px) {
   .header {
     gap: 16px;
-    align-items: flex-start;
-    flex-direction: column;
+    justify-content: flex-start;
   }
 
   .hero,
