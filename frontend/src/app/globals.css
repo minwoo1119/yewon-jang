@@ -1,8 +1,12 @@
 :root {
-  --background: #fbf9f4;
-  --foreground: #1d231f;
-  --text-primary: #1d231f;
-  --text-muted: #5f665f;
+  --background: #f8f9fa;
+  --foreground: #0f172a;
+  --text-primary: #0f172a;
+  --text-muted: #64748b;
+  --accent: #1b263b;
+  --surface: #ffffff;
+  --border-subtle: rgba(15, 23, 42, 0.1);
+  --border-strong: rgba(27, 38, 59, 0.22);
 }
 
 html {
@@ -23,6 +27,7 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: var(--font-manrope), sans-serif;
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
