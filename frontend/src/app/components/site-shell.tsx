@@ -13,7 +13,19 @@ export default function SiteShell({ children }: SiteShellProps) {
   const { data, locale, setLocale } = usePortfolio();
   const [isLocaleOpen, setIsLocaleOpen] = useState(false);
   const localeMenuRef = useRef<HTMLDivElement | null>(null);
-  const emailItem = data.contactItems.find((item) => item.label === "Email");
+  const emailItem = data.contactItems.find((item) => {
+    const normalizedLabel = item.label.trim().toLowerCase();
+    const normalizedValue = item.value.trim().toLowerCase();
+    const normalizedHref = item.href?.trim().toLowerCase();
+
+    return (
+      normalizedLabel === "email" ||
+      normalizedLabel === "e-mail" ||
+      normalizedLabel === "이메일" ||
+      normalizedHref?.startsWith("mailto:") ||
+      normalizedValue.includes("@")
+    );
+  });
   const navItems =
     locale === "ko"
       ? [

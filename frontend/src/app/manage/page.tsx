@@ -40,6 +40,20 @@ type ImageUploadFieldProps = {
   onChange: (value: string) => void;
 };
 
+function isEmailContactItem(item: ContactItem) {
+  const normalizedLabel = item.label.trim().toLowerCase();
+  const normalizedValue = item.value.trim().toLowerCase();
+  const normalizedHref = item.href?.trim().toLowerCase();
+
+  return (
+    normalizedLabel === "email" ||
+    normalizedLabel === "e-mail" ||
+    normalizedLabel === "이메일" ||
+    normalizedHref?.startsWith("mailto:") ||
+    normalizedValue.includes("@")
+  );
+}
+
 function ImageUploadField({ label, value, onChange }: ImageUploadFieldProps) {
   const inputId = useId();
   const [isUploading, setIsUploading] = useState(false);
@@ -271,6 +285,44 @@ export default function ManagePage() {
 
     updateField("skills", [...current.skills, value]);
     setSkillInput((state) => ({ ...state, [editingLocale]: "" }));
+  };
+
+  const footerEmailItem = current.contactItems.find(isEmailContactItem) ?? null;
+  const nonEmailContactItems = current.contactItems
+    .map((item, index) => ({ item, index }))
+    .filter(({ item }) => !isEmailContactItem(item));
+
+  const updateFooterEmail = (value: string) => {
+    const trimmedValue = value.trim();
+    const existingIndex = current.contactItems.findIndex(isEmailContactItem);
+
+    const nextItems = [...current.contactItems];
+
+    if (!trimmedValue) {
+      if (existingIndex !== -1) {
+        nextItems.splice(existingIndex, 1);
+      }
+
+      updateField("contactItems", nextItems);
+      return;
+    }
+
+    const nextEmailItem: ContactItem = {
+      label: editingLocale === "ko" ? "이메일" : "Email",
+      value: trimmedValue,
+      href: `mailto:${trimmedValue}`,
+    };
+
+    if (existingIndex === -1) {
+      nextItems.unshift(nextEmailItem);
+    } else {
+      nextItems[existingIndex] = {
+        ...nextItems[existingIndex],
+        ...nextEmailItem,
+      };
+    }
+
+    updateField("contactItems", nextItems);
   };
 
   if (!isUnlocked) {
@@ -988,7 +1040,15 @@ export default function ManagePage() {
                   rows={3}
                 />
               </label>
-              {current.contactItems.map((item, index) => (
+              <label className={styles.formField}>
+                <span>Primary Email</span>
+                <input
+                  value={footerEmailItem?.value ?? ""}
+                  onChange={(event) => updateFooterEmail(event.target.value)}
+                  placeholder="name@example.com"
+                />
+              </label>
+              {nonEmailContactItems.map(({ item, index }) => (
                 <div key={`${item.label}-${item.value}-${index}`} className={styles.formGroup}>
                   <div className={styles.itemHeader}>
                     <p className={styles.itemIndex}>연락처 {index + 1}</p>
@@ -1042,6 +1102,13 @@ export default function ManagePage() {
 
             <article className={styles.managePanel}>
               <p className={styles.cardLabel}>푸터</p>
+              <label className={styles.formField}>
+                <span>Footer Name</span>
+                <input
+                  value={current.name}
+                  onChange={(event) => updateField("name", event.target.value)}
+                />
+              </label>
               <label className={styles.formField}>
                 <span>Footer Role</span>
                 <input
