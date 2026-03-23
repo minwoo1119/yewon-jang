@@ -8,6 +8,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import { fetchPortfolio, savePortfolio } from "./portfolio-api";
 
 export type Locale = "ko" | "en";
 
@@ -80,7 +81,6 @@ export type PortfolioData = {
 
 export type PortfolioContent = Record<Locale, PortfolioData>;
 
-const STORAGE_KEY = "portfolio-content";
 const LOCALE_KEY = "portfolio-locale";
 
 const koData: PortfolioData = {
@@ -353,33 +353,61 @@ export const defaultPortfolioContent: PortfolioContent = {
   en: enData,
 };
 
+function normalizePortfolioData(
+  data: Partial<PortfolioData> | undefined,
+  fallback: PortfolioData,
+): PortfolioData {
+  return {
+    ...fallback,
+    ...data,
+    profileLinks: Array.isArray(data?.profileLinks)
+      ? data.profileLinks
+      : fallback.profileLinks,
+    interests: Array.isArray(data?.interests) ? data.interests : fallback.interests,
+    recentResearch: Array.isArray(data?.recentResearch)
+      ? data.recentResearch
+      : fallback.recentResearch,
+    skills: Array.isArray(data?.skills) ? data.skills : fallback.skills,
+    backgroundItems: Array.isArray(data?.backgroundItems)
+      ? data.backgroundItems
+      : fallback.backgroundItems,
+    projects: Array.isArray(data?.projects) ? data.projects : fallback.projects,
+    publications: Array.isArray(data?.publications)
+      ? data.publications
+      : fallback.publications,
+    contactItems: Array.isArray(data?.contactItems)
+      ? data.contactItems
+      : fallback.contactItems,
+  };
+}
+
+function normalizePortfolioContent(
+  content: Partial<PortfolioContent> | null | undefined,
+): PortfolioContent {
+  return {
+    ko: normalizePortfolioData(content?.ko, defaultPortfolioContent.ko),
+    en: normalizePortfolioData(content?.en, defaultPortfolioContent.en),
+  };
+}
+
 type PortfolioContextValue = {
   content: PortfolioContent;
   data: PortfolioData;
   locale: Locale;
-  setContent: (content: PortfolioContent) => void;
+  isLoading: boolean;
+  error: string | null;
+  setContent: (content: PortfolioContent) => Promise<void>;
   setLocale: (locale: Locale) => void;
-  resetContent: () => void;
+  refreshContent: () => Promise<void>;
+  resetContent: () => Promise<void>;
 };
 
 const PortfolioContext = createContext<PortfolioContextValue | null>(null);
 
 export function PortfolioProvider({ children }: { children: ReactNode }) {
-  const [content, setContent] = useState<PortfolioContent>(() => {
-    if (typeof window === "undefined") {
-      return defaultPortfolioContent;
-    }
-
-    const saved = window.localStorage.getItem(STORAGE_KEY);
-    if (!saved) return defaultPortfolioContent;
-
-    try {
-      return JSON.parse(saved) as PortfolioContent;
-    } catch {
-      window.localStorage.removeItem(STORAGE_KEY);
-      return defaultPortfolioContent;
-    }
-  });
+  const [content, setContentState] = useState<PortfolioContent>(defaultPortfolioContent);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const [locale, setLocale] = useState<Locale>(() => {
     if (typeof window === "undefined") {
@@ -391,26 +419,51 @@ export function PortfolioProvider({ children }: { children: ReactNode }) {
   });
 
   useEffect(() => {
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(content));
-  }, [content]);
-
-  useEffect(() => {
     window.localStorage.setItem(LOCALE_KEY, locale);
   }, [locale]);
+
+  const refreshContent = async () => {
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetchPortfolio();
+      setContentState(normalizePortfolioContent(response.content));
+    } catch (fetchError) {
+      setError(
+        fetchError instanceof Error
+          ? fetchError.message
+          : "Failed to load portfolio data.",
+      );
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const updateContent = async (nextContent: PortfolioContent) => {
+    setError(null);
+    const normalizedContent = normalizePortfolioContent(nextContent);
+    const response = await savePortfolio(normalizedContent);
+    setContentState(normalizePortfolioContent(response.content));
+  };
+
+  useEffect(() => {
+    void refreshContent();
+  }, []);
 
   const value = useMemo(
     () => ({
       content,
       data: content[locale],
       locale,
-      setContent,
+      isLoading,
+      error,
+      setContent: updateContent,
       setLocale,
-      resetContent: () => {
-        setContent(defaultPortfolioContent);
-        window.localStorage.removeItem(STORAGE_KEY);
-      },
+      refreshContent,
+      resetContent: () => updateContent(defaultPortfolioContent),
     }),
-    [content, locale],
+    [content, locale, isLoading, error],
   );
 
   return <PortfolioContext.Provider value={value}>{children}</PortfolioContext.Provider>;

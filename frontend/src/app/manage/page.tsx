@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useState } from "react";
+import { useEffect, useId, useState } from "react";
 import SiteShell from "../components/site-shell";
 import styles from "../page.module.css";
 import {
@@ -15,6 +15,7 @@ import {
   type ResearchItem,
   type TimelineItem,
 } from "../portfolio-store";
+import { loginAdmin, uploadImage } from "../portfolio-api";
 
 type ManageSection =
   | "basic"
@@ -39,22 +40,26 @@ type ImageUploadFieldProps = {
   onChange: (value: string) => void;
 };
 
-function fileToDataUrl(file: File) {
-  return new Promise<string>((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(String(reader.result));
-    reader.onerror = () => reject(new Error("Failed to read file."));
-    reader.readAsDataURL(file);
-  });
-}
-
 function ImageUploadField({ label, value, onChange }: ImageUploadFieldProps) {
   const inputId = useId();
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadError, setUploadError] = useState<string | null>(null);
 
   const handleFile = async (file?: File) => {
     if (!file) return;
-    const dataUrl = await fileToDataUrl(file);
-    onChange(dataUrl);
+    setIsUploading(true);
+    setUploadError(null);
+
+    try {
+      const response = await uploadImage(file);
+      onChange(response.publicUrl);
+    } catch (error) {
+      setUploadError(
+        error instanceof Error ? error.message : "이미지 업로드에 실패했습니다.",
+      );
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   return (
@@ -86,21 +91,31 @@ function ImageUploadField({ label, value, onChange }: ImageUploadFieldProps) {
                 style={{ backgroundImage: `url(${value})` }}
               />
               <div className={styles.uploadCopy}>
-                <strong>Image selected</strong>
-                <span>Click or drag another file to replace it.</span>
+                <strong>{isUploading ? "Uploading..." : "Image selected"}</strong>
+                <span>
+                  {isUploading
+                    ? "잠시만 기다려주세요."
+                    : "Click or drag another file to replace it."}
+                </span>
               </div>
             </div>
           ) : (
             <div className={styles.uploadCopy}>
-              <strong>Drop an image here</strong>
-              <span>or click to browse from your device.</span>
+              <strong>{isUploading ? "Uploading..." : "Drop an image here"}</strong>
+              <span>
+                {isUploading
+                  ? "잠시만 기다려주세요."
+                  : "or click to browse from your device."}
+              </span>
             </div>
           )}
         </label>
+        {uploadError ? <p className={styles.formHint}>{uploadError}</p> : null}
         {value ? (
           <button
             type="button"
             className={styles.ghostButton}
+            disabled={isUploading}
             onClick={() => onChange("")}
           >
             이미지 제거
@@ -112,10 +127,15 @@ function ImageUploadField({ label, value, onChange }: ImageUploadFieldProps) {
 }
 
 export default function ManagePage() {
-  const { content, locale, setContent, resetContent } = usePortfolio();
+  const { content, locale, setContent, resetContent, isLoading, error } = usePortfolio();
   const [draft, setDraft] = useState(content);
   const [password, setPassword] = useState("");
   const [isUnlocked, setIsUnlocked] = useState(false);
+  const [authError, setAuthError] = useState<string | null>(null);
+  const [saveError, setSaveError] = useState<string | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
+  const [isResetting, setIsResetting] = useState(false);
+  const [isAuthenticating, setIsAuthenticating] = useState(false);
   const [activeSection, setActiveSection] = useState<ManageSection>("basic");
   const [editingLocale, setEditingLocale] = useState<Locale>(locale);
   const [skillInput, setSkillInput] = useState<Record<Locale, string>>({
@@ -124,6 +144,18 @@ export default function ManagePage() {
   });
 
   const current = draft[editingLocale];
+
+  useEffect(() => {
+    setDraft(content);
+  }, [content]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    setIsUnlocked(window.sessionStorage.getItem("portfolio-admin-auth") === "true");
+  }, []);
 
   const updateField = <K extends keyof PortfolioData>(key: K, value: PortfolioData[K]) => {
     setDraft((currentDraft) => ({
@@ -181,20 +213,56 @@ export default function ManagePage() {
     });
   };
 
-  const handleUnlock = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleUnlock = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!password.trim()) return;
-    setDraft(content);
-    setIsUnlocked(true);
+
+    setIsAuthenticating(true);
+    setAuthError(null);
+
+    try {
+      await loginAdmin(password);
+      setDraft(content);
+      setIsUnlocked(true);
+      window.sessionStorage.setItem("portfolio-admin-auth", "true");
+    } catch (error) {
+      setAuthError(
+        error instanceof Error ? error.message : "로그인에 실패했습니다.",
+      );
+    } finally {
+      setIsAuthenticating(false);
+    }
   };
 
-  const handleSave = () => {
-    setContent(draft);
+  const handleSave = async () => {
+    setIsSaving(true);
+    setSaveError(null);
+
+    try {
+      await setContent(draft);
+    } catch (error) {
+      setSaveError(
+        error instanceof Error ? error.message : "저장에 실패했습니다.",
+      );
+    } finally {
+      setIsSaving(false);
+    }
   };
 
-  const handleReset = () => {
+  const handleReset = async () => {
     setDraft(defaultPortfolioContent);
-    resetContent();
+    setIsResetting(true);
+    setSaveError(null);
+
+    try {
+      await resetContent();
+    } catch (error) {
+      setSaveError(
+        error instanceof Error ? error.message : "초기화에 실패했습니다.",
+      );
+    } finally {
+      setIsResetting(false);
+    }
   };
 
   const addSkill = () => {
@@ -218,8 +286,7 @@ export default function ManagePage() {
             <div className={styles.authIntro}>
               <p className={styles.cardLabel}>Access</p>
               <p className={styles.formHint}>
-                현재는 백엔드 인증 연결 전 단계라서 입력 UI만 제공합니다. 이후 서버
-                검증 로직을 연결하면 됩니다.
+                서버의 관리자 비밀번호 검증 API에 연결되어 있습니다.
               </p>
             </div>
 
@@ -234,9 +301,11 @@ export default function ManagePage() {
             </label>
 
             <button type="submit" className={styles.authButton}>
-              Continue
+              {isAuthenticating ? "Checking..." : "Continue"}
             </button>
           </form>
+          {authError ? <p className={styles.formHint}>{authError}</p> : null}
+          {error ? <p className={styles.formHint}>{error}</p> : null}
         </section>
       </SiteShell>
     );
@@ -249,6 +318,11 @@ export default function ManagePage() {
           <p className={styles.sectionEyebrow}>Portfolio Management</p>
           <h2>섹션별로 내용을 나눠서 수정할 수 있도록 정리했습니다.</h2>
         </div>
+        {isLoading ? (
+          <p className={styles.formHint}>포트폴리오 데이터를 불러오는 중입니다.</p>
+        ) : null}
+        {error ? <p className={styles.formHint}>{error}</p> : null}
+        {saveError ? <p className={styles.formHint}>{saveError}</p> : null}
 
         <div className={styles.manageLanguageTabs}>
           <button
@@ -987,11 +1061,21 @@ export default function ManagePage() {
         )}
 
         <div className={styles.manageActions}>
-          <button type="button" className={styles.primaryButton} onClick={handleSave}>
-            Save Changes
+          <button
+            type="button"
+            className={styles.primaryButton}
+            onClick={() => void handleSave()}
+            disabled={isSaving || isResetting || isLoading}
+          >
+            {isSaving ? "Saving..." : "Save Changes"}
           </button>
-          <button type="button" className={styles.secondaryButton} onClick={handleReset}>
-            Reset to Default
+          <button
+            type="button"
+            className={styles.secondaryButton}
+            onClick={() => void handleReset()}
+            disabled={isSaving || isResetting}
+          >
+            {isResetting ? "Resetting..." : "Reset to Default"}
           </button>
         </div>
       </section>
