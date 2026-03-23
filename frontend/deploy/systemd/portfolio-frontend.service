@@ -1,0 +1,17 @@
+[Unit]
+Description=Portfolio Frontend
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/srv/portfolio/frontend
+Environment=NODE_ENV=production
+EnvironmentFile=/srv/portfolio/frontend/.env.production
+ExecStart=/usr/bin/npm run start -- --hostname 127.0.0.1 --port 3001
+Restart=always
+RestartSec=5
+User=www-data
+Group=www-data
+
+[Install]
+WantedBy=multi-user.target
