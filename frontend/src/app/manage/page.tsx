@@ -25,18 +25,196 @@ type ManageSection =
   | "publications"
   | "contact";
 
-const sections: { id: ManageSection; label: string }[] = [
-  { id: "basic", label: "기본 정보" },
-  { id: "home", label: "홈 화면" },
-  { id: "background", label: "학력·경력" },
-  { id: "projects", label: "프로젝트" },
-  { id: "publications", label: "논문" },
   { id: "contact", label: "연락처·푸터" },
-];
+const manageCopy = {
+  ko: {
+    authTitle: "관리 페이지 접근을 위해 비밀번호를 입력하세요.",
+    authLead: "콘텐츠와 이미지를 수정하는 관리자 전용 화면입니다.",
+    authVerification: "백엔드 인증",
+    authSync: "Supabase 연동",
+    accessPassword: "접근 비밀번호",
+    enterPassword: "비밀번호를 입력하세요",
+    checking: "확인 중...",
+    enterDashboard: "관리 페이지 열기",
+    heading: "섹션별로 내용을 나눠서 수정할 수 있도록 정리했습니다.",
+    loading: "포트폴리오 데이터를 불러오는 중입니다.",
+    loginFailed: "로그인에 실패했습니다.",
+    saveFailed: "저장에 실패했습니다.",
+    resetFailed: "초기화에 실패했습니다.",
+    uploadFailed: "이미지 업로드에 실패했습니다.",
+    languageKo: "한국어",
+    languageEn: "영어",
+    sections: {
+      basic: "기본 정보",
+      home: "홈 화면",
+      background: "학력·경력",
+      projects: "프로젝트",
+      publications: "논문",
+      contact: "연락처·푸터",
+    } satisfies Record<ManageSection, string>,
+    basicInfo: "기본 정보",
+    externalLinks: "외부 링크",
+    addLink: "링크 추가",
+    linkItem: "링크",
+    aboutSection: "소개 섹션",
+    recentResearchCards: "최근 연구 카드",
+    addCard: "카드 추가",
+    cardItem: "카드",
+    backgroundSection: "학력·경력",
+    addItem: "항목 추가",
+    timelineItem: "이력",
+    projectsSection: "프로젝트",
+    addProject: "프로젝트 추가",
+    projectItem: "프로젝트",
+    publicationsSection: "논문",
+    addPublication: "논문 추가",
+    publicationItem: "논문",
+    contactSection: "연락처",
+    addContact: "연락처 추가",
+    contactItem: "연락처",
+    footer: "푸터",
+    remove: "삭제",
+    eyebrow: "상단 문구",
+    name: "이름",
+    role: "역할",
+    heroDescription: "대표 소개문",
+    profileImage: "프로필 이미지",
+    label: "라벨",
+    url: "URL",
+    aboutTitle: "소개 제목",
+    researchPhilosophy: "연구 방향",
+    interests: "관심 분야",
+    skillsTitle: "역량 제목",
+    skills: "역량",
+    skillsPlaceholder: "역량을 입력하고 Enter를 누르세요",
+    recentResearchTitle: "최근 연구 섹션 제목",
+    title: "제목",
+    description: "설명",
+    sectionTitle: "섹션 제목",
+    period: "기간",
+    subtitle: "부제",
+    projectImage: "프로젝트 이미지",
+    year: "연도",
+    type: "유형",
+    citation: "인용 정보",
+    doiUrl: "DOI URL",
+    paperUrl: "논문 URL",
+    contactTitle: "연락처 섹션 제목",
+    primaryEmail: "대표 이메일",
+    value: "값",
+    href: "링크",
+    footerName: "푸터 이름",
+    footerRole: "푸터 역할",
+    copyright: "저작권 문구",
+    saveChanges: "변경사항 저장",
+    saving: "저장 중...",
+    resetDefault: "기본값으로 초기화",
+    resetting: "초기화 중...",
+    imageSelected: "이미지 선택됨",
+    uploading: "업로드 중...",
+    uploadingHint: "잠시만 기다려주세요.",
+    replaceImage: "클릭하거나 다른 파일을 드래그해서 교체할 수 있습니다.",
+    dropImage: "이미지를 여기로 끌어오세요",
+    browseImage: "또는 클릭해서 파일을 선택하세요.",
+    removeImage: "이미지 제거",
+  },
+  en: {
+    authTitle: "Enter the password to access the admin page.",
+    authLead: "This is the admin screen for editing content and images.",
+    authVerification: "Backend verification",
+    authSync: "Supabase sync",
+    accessPassword: "Access Password",
+    enterPassword: "Enter password",
+    checking: "Checking...",
+    enterDashboard: "Enter Dashboard",
+    heading: "섹션별로 내용을 나눠서 수정할 수 있도록 정리했습니다.",
+    loading: "Loading portfolio data.",
+    loginFailed: "Failed to log in.",
+    saveFailed: "Failed to save changes.",
+    resetFailed: "Failed to reset content.",
+    uploadFailed: "Failed to upload image.",
+    languageKo: "Korean",
+    languageEn: "English",
+    sections: {
+      basic: "기본 정보",
+      home: "홈 화면",
+      background: "학력·경력",
+      projects: "프로젝트",
+      publications: "논문",
+      contact: "연락처·푸터",
+    } satisfies Record<ManageSection, string>,
+    basicInfo: "기본 정보",
+    externalLinks: "외부 링크",
+    addLink: "Add Link",
+    linkItem: "Link",
+    aboutSection: "소개 섹션",
+    recentResearchCards: "최근 연구 카드",
+    addCard: "Add Card",
+    cardItem: "Card",
+    backgroundSection: "학력·경력",
+    addItem: "Add Item",
+    timelineItem: "Entry",
+    projectsSection: "프로젝트",
+    addProject: "Add Project",
+    projectItem: "Project",
+    publicationsSection: "논문",
+    addPublication: "Add Publication",
+    publicationItem: "Publication",
+    contactSection: "연락처",
+    addContact: "Add Contact",
+    contactItem: "Contact",
+    footer: "푸터",
+    remove: "Remove",
+    eyebrow: "Eyebrow",
+    name: "Name",
+    role: "Role",
+    heroDescription: "Hero Description",
+    profileImage: "Profile Image",
+    label: "Label",
+    url: "URL",
+    aboutTitle: "About Title",
+    researchPhilosophy: "Research Philosophy",
+    interests: "Interests",
+    skillsTitle: "Skills Title",
+    skills: "Skills",
+    skillsPlaceholder: "Type a skill and press Enter",
+    recentResearchTitle: "Recent Research Title",
+    title: "Title",
+    description: "Description",
+    sectionTitle: "Section Title",
+    period: "Period",
+    subtitle: "Subtitle",
+    projectImage: "Project Image",
+    year: "Year",
+    type: "Type",
+    citation: "Citation",
+    doiUrl: "DOI URL",
+    paperUrl: "Paper URL",
+    contactTitle: "Contact Section Title",
+    primaryEmail: "Primary Email",
+    value: "Value",
+    href: "Href",
+    footerName: "Footer Name",
+    footerRole: "Footer Role",
+    copyright: "Copyright",
+    saveChanges: "Save Changes",
+    saving: "Saving...",
+    resetDefault: "Reset to Default",
+    resetting: "Resetting...",
+    imageSelected: "Image selected",
+    uploading: "Uploading...",
+    uploadingHint: "Please wait a moment.",
+    replaceImage: "Click or drag another file to replace it.",
+    dropImage: "Drop an image here",
+    browseImage: "or click to browse from your device.",
+    removeImage: "Remove Image",
+  },
+};
 
 type ImageUploadFieldProps = {
   label: string;
   value?: string;
+  locale: Locale;
   onChange: (value: string) => void;
 };
 
@@ -54,10 +232,16 @@ function isEmailContactItem(item: ContactItem) {
   );
 }
 
-function ImageUploadField({ label, value, onChange }: ImageUploadFieldProps) {
+function ImageUploadField({
+  label,
+  value,
+  locale,
+  onChange,
+}: ImageUploadFieldProps) {
   const inputId = useId();
   const [isUploading, setIsUploading] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
+  const copy = manageCopy[locale];
 
   const handleFile = async (file?: File) => {
     if (!file) return;
@@ -68,9 +252,7 @@ function ImageUploadField({ label, value, onChange }: ImageUploadFieldProps) {
       const response = await uploadImage(file);
       onChange(response.publicUrl);
     } catch (error) {
-      setUploadError(
-        error instanceof Error ? error.message : "이미지 업로드에 실패했습니다.",
-      );
+      setUploadError(error instanceof Error ? error.message : copy.uploadFailed);
     } finally {
       setIsUploading(false);
     }
@@ -105,22 +287,14 @@ function ImageUploadField({ label, value, onChange }: ImageUploadFieldProps) {
                 style={{ backgroundImage: `url(${value})` }}
               />
               <div className={styles.uploadCopy}>
-                <strong>{isUploading ? "Uploading..." : "Image selected"}</strong>
-                <span>
-                  {isUploading
-                    ? "잠시만 기다려주세요."
-                    : "Click or drag another file to replace it."}
-                </span>
+                <strong>{isUploading ? copy.uploading : copy.imageSelected}</strong>
+                <span>{isUploading ? copy.uploadingHint : copy.replaceImage}</span>
               </div>
             </div>
           ) : (
             <div className={styles.uploadCopy}>
-              <strong>{isUploading ? "Uploading..." : "Drop an image here"}</strong>
-              <span>
-                {isUploading
-                  ? "잠시만 기다려주세요."
-                  : "or click to browse from your device."}
-              </span>
+              <strong>{isUploading ? copy.uploading : copy.dropImage}</strong>
+              <span>{isUploading ? copy.uploadingHint : copy.browseImage}</span>
             </div>
           )}
         </label>
@@ -132,7 +306,7 @@ function ImageUploadField({ label, value, onChange }: ImageUploadFieldProps) {
             disabled={isUploading}
             onClick={() => onChange("")}
           >
-            이미지 제거
+            {copy.removeImage}
           </button>
         ) : null}
       </div>
@@ -158,18 +332,20 @@ export default function ManagePage() {
   });
 
   const current = draft[editingLocale];
+  const copy = manageCopy[editingLocale];
+  const authCopy = manageCopy[locale];
+  const sections: { id: ManageSection; label: string }[] = [
+    { id: "basic", label: copy.sections.basic },
+    { id: "home", label: copy.sections.home },
+    { id: "background", label: copy.sections.background },
+    { id: "projects", label: copy.sections.projects },
+    { id: "publications", label: copy.sections.publications },
+    { id: "contact", label: copy.sections.contact },
+  ];
 
   useEffect(() => {
     setDraft(content);
   }, [content]);
-
-  useEffect(() => {
-    if (typeof window === "undefined") {
-      return;
-    }
-
-    setIsUnlocked(window.sessionStorage.getItem("portfolio-admin-auth") === "true");
-  }, []);
 
   const updateField = <K extends keyof PortfolioData>(key: K, value: PortfolioData[K]) => {
     setDraft((currentDraft) => ({
@@ -189,6 +365,7 @@ export default function ManagePage() {
     setDraft((currentDraft) => {
       const localeData = currentDraft[editingLocale];
       const items = localeData[key] as T[];
+
       return {
         ...currentDraft,
         [editingLocale]: {
@@ -204,6 +381,7 @@ export default function ManagePage() {
   const addArrayItem = <T,>(key: keyof PortfolioData, item: T) => {
     setDraft((currentDraft) => {
       const localeData = currentDraft[editingLocale];
+
       return {
         ...currentDraft,
         [editingLocale]: {
@@ -217,6 +395,7 @@ export default function ManagePage() {
   const removeArrayItem = <T,>(key: keyof PortfolioData, index: number) => {
     setDraft((currentDraft) => {
       const localeData = currentDraft[editingLocale];
+
       return {
         ...currentDraft,
         [editingLocale]: {
@@ -238,11 +417,8 @@ export default function ManagePage() {
       await loginAdmin(password);
       setDraft(content);
       setIsUnlocked(true);
-      window.sessionStorage.setItem("portfolio-admin-auth", "true");
     } catch (error) {
-      setAuthError(
-        error instanceof Error ? error.message : "로그인에 실패했습니다.",
-      );
+      setAuthError(error instanceof Error ? error.message : authCopy.loginFailed);
     } finally {
       setIsAuthenticating(false);
     }
@@ -255,9 +431,7 @@ export default function ManagePage() {
     try {
       await setContent(draft);
     } catch (error) {
-      setSaveError(
-        error instanceof Error ? error.message : "저장에 실패했습니다.",
-      );
+      setSaveError(error instanceof Error ? error.message : copy.saveFailed);
     } finally {
       setIsSaving(false);
     }
@@ -271,9 +445,7 @@ export default function ManagePage() {
     try {
       await resetContent();
     } catch (error) {
-      setSaveError(
-        error instanceof Error ? error.message : "초기화에 실패했습니다.",
-      );
+      setSaveError(error instanceof Error ? error.message : copy.resetFailed);
     } finally {
       setIsResetting(false);
     }
@@ -295,7 +467,6 @@ export default function ManagePage() {
   const updateFooterEmail = (value: string) => {
     const trimmedValue = value.trim();
     const existingIndex = current.contactItems.findIndex(isEmailContactItem);
-
     const nextItems = [...current.contactItems];
 
     if (!trimmedValue) {
@@ -329,35 +500,37 @@ export default function ManagePage() {
     return (
       <SiteShell>
         <section className={styles.section}>
-          <div className={styles.sectionHeading}>
-            <p className={styles.sectionEyebrow}>Portfolio Management</p>
-            <h2>관리 페이지 접근을 위해 암호를 입력하세요.</h2>
-          </div>
-
-          <form className={styles.authInline} onSubmit={handleUnlock}>
-            <div className={styles.authIntro}>
-              <p className={styles.cardLabel}>Access</p>
-              <p className={styles.formHint}>
-                서버의 관리자 비밀번호 검증 API에 연결되어 있습니다.
-              </p>
+          <div className={styles.authGate}>
+            <div className={styles.authHeading}>
+              <p className={styles.authKicker}>Portfolio Management</p>
+              <h2>{authCopy.authTitle}</h2>
+              <p className={styles.authLead}>{authCopy.authLead}</p>
             </div>
 
-            <label className={styles.authField}>
-              <span>Access Password</span>
-              <input
-                type="password"
-                value={password}
-                onChange={(event) => setPassword(event.target.value)}
-                placeholder="Enter password"
-              />
-            </label>
+            <div className={styles.authSubcopy}>
+              <span>{authCopy.authVerification}</span>
+              <span>{authCopy.authSync}</span>
+            </div>
 
-            <button type="submit" className={styles.authButton}>
-              {isAuthenticating ? "Checking..." : "Continue"}
-            </button>
-          </form>
-          {authError ? <p className={styles.formHint}>{authError}</p> : null}
-          {error ? <p className={styles.formHint}>{error}</p> : null}
+            <form className={styles.authPanel} onSubmit={handleUnlock}>
+              <label className={styles.authField}>
+                <span>{authCopy.accessPassword}</span>
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(event) => setPassword(event.target.value)}
+                  placeholder={authCopy.enterPassword}
+                />
+              </label>
+
+              <button type="submit" className={styles.authButton}>
+                {isAuthenticating ? authCopy.checking : authCopy.enterDashboard}
+              </button>
+            </form>
+
+            {authError ? <p className={styles.formHint}>{authError}</p> : null}
+            {error ? <p className={styles.formHint}>{error}</p> : null}
+          </div>
         </section>
       </SiteShell>
     );
@@ -368,32 +541,26 @@ export default function ManagePage() {
       <section className={styles.section}>
         <div className={styles.sectionHeading}>
           <p className={styles.sectionEyebrow}>Portfolio Management</p>
-          <h2>섹션별로 내용을 나눠서 수정할 수 있도록 정리했습니다.</h2>
+          <h2>{copy.heading}</h2>
         </div>
-        {isLoading ? (
-          <p className={styles.formHint}>포트폴리오 데이터를 불러오는 중입니다.</p>
-        ) : null}
+        {isLoading ? <p className={styles.formHint}>{copy.loading}</p> : null}
         {error ? <p className={styles.formHint}>{error}</p> : null}
         {saveError ? <p className={styles.formHint}>{saveError}</p> : null}
 
         <div className={styles.manageLanguageTabs}>
           <button
             type="button"
-            className={
-              editingLocale === "ko" ? styles.manageTabActive : styles.manageTab
-            }
+            className={editingLocale === "ko" ? styles.manageTabActive : styles.manageTab}
             onClick={() => setEditingLocale("ko")}
           >
-            한국어
+            {copy.languageKo}
           </button>
           <button
             type="button"
-            className={
-              editingLocale === "en" ? styles.manageTabActive : styles.manageTab
-            }
+            className={editingLocale === "en" ? styles.manageTabActive : styles.manageTab}
             onClick={() => setEditingLocale("en")}
           >
-            English
+            {copy.languageEn}
           </button>
         </div>
 
@@ -402,11 +569,7 @@ export default function ManagePage() {
             <button
               key={section.id}
               type="button"
-              className={
-                activeSection === section.id
-                  ? styles.manageTabActive
-                  : styles.manageTab
-              }
+              className={activeSection === section.id ? styles.manageTabActive : styles.manageTab}
               onClick={() => setActiveSection(section.id)}
             >
               {section.label}
@@ -417,30 +580,30 @@ export default function ManagePage() {
         {activeSection === "basic" && (
           <div className={styles.manageLayout}>
             <article className={styles.managePanel}>
-              <p className={styles.cardLabel}>기본 정보</p>
+              <p className={styles.cardLabel}>{copy.basicInfo}</p>
               <label className={styles.formField}>
-                <span>Eyebrow</span>
+                <span>{copy.eyebrow}</span>
                 <input
                   value={current.heroEyebrow}
                   onChange={(event) => updateField("heroEyebrow", event.target.value)}
                 />
               </label>
               <label className={styles.formField}>
-                <span>Name</span>
+                <span>{copy.name}</span>
                 <input
                   value={current.name}
                   onChange={(event) => updateField("name", event.target.value)}
                 />
               </label>
               <label className={styles.formField}>
-                <span>Role</span>
+                <span>{copy.role}</span>
                 <input
                   value={current.heroRole}
                   onChange={(event) => updateField("heroRole", event.target.value)}
                 />
               </label>
               <label className={styles.formField}>
-                <span>Hero Description</span>
+                <span>{copy.heroDescription}</span>
                 <textarea
                   value={current.heroDescription}
                   onChange={(event) => updateField("heroDescription", event.target.value)}
@@ -448,7 +611,8 @@ export default function ManagePage() {
                 />
               </label>
               <ImageUploadField
-                label="Profile Image"
+                label={copy.profileImage}
+                locale={editingLocale}
                 value={current.heroImageUrl}
                 onChange={(value) => updateField("heroImageUrl", value)}
               />
@@ -456,31 +620,29 @@ export default function ManagePage() {
 
             <article className={styles.managePanel}>
               <div className={styles.panelHeader}>
-                <p className={styles.cardLabel}>외부 링크</p>
+                <p className={styles.cardLabel}>{copy.externalLinks}</p>
                 <button
                   type="button"
                   className={styles.secondaryButton}
-                  onClick={() =>
-                    addArrayItem<LinkItem>("profileLinks", { label: "", href: "" })
-                  }
+                  onClick={() => addArrayItem<LinkItem>("profileLinks", { label: "", href: "" })}
                 >
-                  링크 추가
+                  {copy.addLink}
                 </button>
               </div>
               {current.profileLinks.map((item, index) => (
                 <div key={`${item.label}-${index}`} className={styles.formGroup}>
                   <div className={styles.itemHeader}>
-                    <p className={styles.itemIndex}>링크 {index + 1}</p>
+                    <p className={styles.itemIndex}>{copy.linkItem} {index + 1}</p>
                     <button
                       type="button"
                       className={styles.ghostButton}
                       onClick={() => removeArrayItem<LinkItem>("profileLinks", index)}
                     >
-                      삭제
+                      {copy.remove}
                     </button>
                   </div>
                   <label className={styles.formField}>
-                    <span>Label</span>
+                    <span>{copy.label}</span>
                     <input
                       value={item.label}
                       onChange={(event) =>
@@ -492,7 +654,7 @@ export default function ManagePage() {
                     />
                   </label>
                   <label className={styles.formField}>
-                    <span>URL</span>
+                    <span>{copy.url}</span>
                     <input
                       value={item.href}
                       onChange={(event) =>
@@ -512,9 +674,9 @@ export default function ManagePage() {
         {activeSection === "home" && (
           <div className={styles.manageLayout}>
             <article className={styles.managePanel}>
-              <p className={styles.cardLabel}>소개 섹션</p>
+              <p className={styles.cardLabel}>{copy.aboutSection}</p>
               <label className={styles.formField}>
-                <span>About Title</span>
+                <span>{copy.aboutTitle}</span>
                 <textarea
                   value={current.aboutTitle}
                   onChange={(event) => updateField("aboutTitle", event.target.value)}
@@ -522,7 +684,7 @@ export default function ManagePage() {
                 />
               </label>
               <label className={styles.formField}>
-                <span>Research Philosophy</span>
+                <span>{copy.researchPhilosophy}</span>
                 <textarea
                   value={current.philosophy}
                   onChange={(event) => updateField("philosophy", event.target.value)}
@@ -530,7 +692,7 @@ export default function ManagePage() {
                 />
               </label>
               <label className={styles.formField}>
-                <span>Interests</span>
+                <span>{copy.interests}</span>
                 <textarea
                   value={current.interests.join("\n")}
                   onChange={(event) =>
@@ -546,7 +708,7 @@ export default function ManagePage() {
                 />
               </label>
               <label className={styles.formField}>
-                <span>Skills Title</span>
+                <span>{copy.skillsTitle}</span>
                 <textarea
                   value={current.skillsTitle}
                   onChange={(event) => updateField("skillsTitle", event.target.value)}
@@ -554,7 +716,7 @@ export default function ManagePage() {
                 />
               </label>
               <div className={styles.formField}>
-                <span>Skills</span>
+                <span>{copy.skills}</span>
                 <div className={styles.skillComposer}>
                   <div className={styles.skillTokenList}>
                     {current.skills.map((skill, index) => (
@@ -590,7 +752,7 @@ export default function ManagePage() {
                         addSkill();
                       }
                     }}
-                    placeholder="Type a skill and press Enter"
+                    placeholder={copy.skillsPlaceholder}
                   />
                 </div>
               </div>
@@ -599,7 +761,7 @@ export default function ManagePage() {
             <article className={styles.managePanel}>
               <div className={styles.panelHeader}>
                 <div>
-                  <p className={styles.cardLabel}>최근 연구 카드</p>
+                  <p className={styles.cardLabel}>{copy.recentResearchCards}</p>
                   <p className={styles.formHint}>{current.recentResearchTitle}</p>
                 </div>
                 <button
@@ -613,35 +775,31 @@ export default function ManagePage() {
                     })
                   }
                 >
-                  카드 추가
+                  {copy.addCard}
                 </button>
               </div>
               <label className={styles.formField}>
-                <span>Recent Research Title</span>
+                <span>{copy.recentResearchTitle}</span>
                 <textarea
-                value={current.recentResearchTitle}
-                  onChange={(event) =>
-                    updateField("recentResearchTitle", event.target.value)
-                  }
+                  value={current.recentResearchTitle}
+                  onChange={(event) => updateField("recentResearchTitle", event.target.value)}
                   rows={3}
                 />
               </label>
               {current.recentResearch.map((item, index) => (
                 <div key={`${item.title}-${index}`} className={styles.formGroup}>
                   <div className={styles.itemHeader}>
-                    <p className={styles.itemIndex}>카드 {index + 1}</p>
+                    <p className={styles.itemIndex}>{copy.cardItem} {index + 1}</p>
                     <button
                       type="button"
                       className={styles.ghostButton}
-                      onClick={() =>
-                        removeArrayItem<ResearchItem>("recentResearch", index)
-                      }
+                      onClick={() => removeArrayItem<ResearchItem>("recentResearch", index)}
                     >
-                      삭제
+                      {copy.remove}
                     </button>
                   </div>
                   <label className={styles.formField}>
-                    <span>Label</span>
+                    <span>{copy.label}</span>
                     <input
                       value={item.label}
                       onChange={(event) =>
@@ -653,7 +811,7 @@ export default function ManagePage() {
                     />
                   </label>
                   <label className={styles.formField}>
-                    <span>Title</span>
+                    <span>{copy.title}</span>
                     <input
                       value={item.title}
                       onChange={(event) =>
@@ -665,7 +823,7 @@ export default function ManagePage() {
                     />
                   </label>
                   <label className={styles.formField}>
-                    <span>Description</span>
+                    <span>{copy.description}</span>
                     <textarea
                       value={item.description}
                       onChange={(event) =>
@@ -687,9 +845,7 @@ export default function ManagePage() {
           <div className={styles.manageLayout}>
             <article className={styles.managePanel}>
               <div className={styles.panelHeader}>
-                <div>
-                  <p className={styles.cardLabel}>학력·경력</p>
-                </div>
+                <p className={styles.cardLabel}>{copy.backgroundSection}</p>
                 <button
                   type="button"
                   className={styles.secondaryButton}
@@ -702,11 +858,11 @@ export default function ManagePage() {
                     })
                   }
                 >
-                  항목 추가
+                  {copy.addItem}
                 </button>
               </div>
               <label className={styles.formField}>
-                <span>Section Title</span>
+                <span>{copy.sectionTitle}</span>
                 <textarea
                   value={current.backgroundTitle}
                   onChange={(event) => updateField("backgroundTitle", event.target.value)}
@@ -716,19 +872,17 @@ export default function ManagePage() {
               {current.backgroundItems.map((item, index) => (
                 <div key={`${item.year}-${item.title}-${index}`} className={styles.formGroup}>
                   <div className={styles.itemHeader}>
-                    <p className={styles.itemIndex}>이력 {index + 1}</p>
+                    <p className={styles.itemIndex}>{copy.timelineItem} {index + 1}</p>
                     <button
                       type="button"
                       className={styles.ghostButton}
-                      onClick={() =>
-                        removeArrayItem<TimelineItem>("backgroundItems", index)
-                      }
+                      onClick={() => removeArrayItem<TimelineItem>("backgroundItems", index)}
                     >
-                      삭제
+                      {copy.remove}
                     </button>
                   </div>
                   <label className={styles.formField}>
-                    <span>Period</span>
+                    <span>{copy.period}</span>
                     <input
                       value={item.year}
                       onChange={(event) =>
@@ -740,7 +894,7 @@ export default function ManagePage() {
                     />
                   </label>
                   <label className={styles.formField}>
-                    <span>Title</span>
+                    <span>{copy.title}</span>
                     <input
                       value={item.title}
                       onChange={(event) =>
@@ -752,7 +906,7 @@ export default function ManagePage() {
                     />
                   </label>
                   <label className={styles.formField}>
-                    <span>Subtitle</span>
+                    <span>{copy.subtitle}</span>
                     <input
                       value={item.subtitle}
                       onChange={(event) =>
@@ -764,7 +918,7 @@ export default function ManagePage() {
                     />
                   </label>
                   <label className={styles.formField}>
-                    <span>Description</span>
+                    <span>{copy.description}</span>
                     <textarea
                       value={item.description}
                       onChange={(event) =>
@@ -786,7 +940,7 @@ export default function ManagePage() {
           <div className={styles.manageLayout}>
             <article className={styles.managePanel}>
               <div className={styles.panelHeader}>
-                <p className={styles.cardLabel}>프로젝트</p>
+                <p className={styles.cardLabel}>{copy.projectsSection}</p>
                 <button
                   type="button"
                   className={styles.secondaryButton}
@@ -799,11 +953,11 @@ export default function ManagePage() {
                     })
                   }
                 >
-                  프로젝트 추가
+                  {copy.addProject}
                 </button>
               </div>
               <label className={styles.formField}>
-                <span>Section Title</span>
+                <span>{copy.sectionTitle}</span>
                 <textarea
                   value={current.projectsTitle}
                   onChange={(event) => updateField("projectsTitle", event.target.value)}
@@ -813,17 +967,17 @@ export default function ManagePage() {
               {current.projects.map((item, index) => (
                 <div key={`${item.label}-${item.title}-${index}`} className={styles.formGroup}>
                   <div className={styles.itemHeader}>
-                    <p className={styles.itemIndex}>프로젝트 {index + 1}</p>
+                    <p className={styles.itemIndex}>{copy.projectItem} {index + 1}</p>
                     <button
                       type="button"
                       className={styles.ghostButton}
                       onClick={() => removeArrayItem<ProjectItem>("projects", index)}
                     >
-                      삭제
+                      {copy.remove}
                     </button>
                   </div>
                   <label className={styles.formField}>
-                    <span>Label</span>
+                    <span>{copy.label}</span>
                     <input
                       value={item.label}
                       onChange={(event) =>
@@ -835,7 +989,7 @@ export default function ManagePage() {
                     />
                   </label>
                   <label className={styles.formField}>
-                    <span>Title</span>
+                    <span>{copy.title}</span>
                     <input
                       value={item.title}
                       onChange={(event) =>
@@ -847,7 +1001,8 @@ export default function ManagePage() {
                     />
                   </label>
                   <ImageUploadField
-                    label="Project Image"
+                    label={copy.projectImage}
+                    locale={editingLocale}
                     value={item.imageUrl}
                     onChange={(value) =>
                       updateArrayItem<ProjectItem>("projects", index, (current) => ({
@@ -857,7 +1012,7 @@ export default function ManagePage() {
                     }
                   />
                   <label className={styles.formField}>
-                    <span>Description</span>
+                    <span>{copy.description}</span>
                     <textarea
                       value={item.description}
                       onChange={(event) =>
@@ -879,7 +1034,7 @@ export default function ManagePage() {
           <div className={styles.manageLayout}>
             <article className={styles.managePanel}>
               <div className={styles.panelHeader}>
-                <p className={styles.cardLabel}>논문</p>
+                <p className={styles.cardLabel}>{copy.publicationsSection}</p>
                 <button
                   type="button"
                   className={styles.secondaryButton}
@@ -895,23 +1050,21 @@ export default function ManagePage() {
                     })
                   }
                 >
-                  논문 추가
+                  {copy.addPublication}
                 </button>
               </div>
               <label className={styles.formField}>
-                <span>Section Title</span>
+                <span>{copy.sectionTitle}</span>
                 <textarea
                   value={current.publicationsTitle}
-                  onChange={(event) =>
-                    updateField("publicationsTitle", event.target.value)
-                  }
+                  onChange={(event) => updateField("publicationsTitle", event.target.value)}
                   rows={3}
                 />
               </label>
               {current.publications.map((item, index) => (
                 <div key={`${item.year}-${item.title}-${index}`} className={styles.formGroup}>
                   <div className={styles.itemHeader}>
-                    <p className={styles.itemIndex}>논문 {index + 1}</p>
+                    <p className={styles.itemIndex}>{copy.publicationItem} {index + 1}</p>
                     <button
                       type="button"
                       className={styles.ghostButton}
@@ -919,11 +1072,11 @@ export default function ManagePage() {
                         removeArrayItem<PublicationItem>("publications", index)
                       }
                     >
-                      삭제
+                      {copy.remove}
                     </button>
                   </div>
                   <label className={styles.formField}>
-                    <span>Year</span>
+                    <span>{copy.year}</span>
                     <input
                       value={item.year}
                       onChange={(event) =>
@@ -935,7 +1088,7 @@ export default function ManagePage() {
                     />
                   </label>
                   <label className={styles.formField}>
-                    <span>Type</span>
+                    <span>{copy.type}</span>
                     <input
                       value={item.type}
                       onChange={(event) =>
@@ -947,7 +1100,7 @@ export default function ManagePage() {
                     />
                   </label>
                   <label className={styles.formField}>
-                    <span>Role</span>
+                    <span>{copy.role}</span>
                     <input
                       value={item.role}
                       onChange={(event) =>
@@ -959,7 +1112,7 @@ export default function ManagePage() {
                     />
                   </label>
                   <label className={styles.formField}>
-                    <span>Title</span>
+                    <span>{copy.title}</span>
                     <input
                       value={item.title}
                       onChange={(event) =>
@@ -971,7 +1124,7 @@ export default function ManagePage() {
                     />
                   </label>
                   <label className={styles.formField}>
-                    <span>Citation</span>
+                    <span>{copy.citation}</span>
                     <textarea
                       value={item.citation}
                       onChange={(event) =>
@@ -984,7 +1137,7 @@ export default function ManagePage() {
                     />
                   </label>
                   <label className={styles.formField}>
-                    <span>DOI URL</span>
+                    <span>{copy.doiUrl}</span>
                     <input
                       value={item.doi}
                       onChange={(event) =>
@@ -996,7 +1149,7 @@ export default function ManagePage() {
                     />
                   </label>
                   <label className={styles.formField}>
-                    <span>Paper URL</span>
+                    <span>{copy.paperUrl}</span>
                     <input
                       value={item.paperUrl}
                       onChange={(event) =>
@@ -1017,7 +1170,7 @@ export default function ManagePage() {
           <div className={styles.manageLayout}>
             <article className={styles.managePanel}>
               <div className={styles.panelHeader}>
-                <p className={styles.cardLabel}>연락처</p>
+                <p className={styles.cardLabel}>{copy.contactSection}</p>
                 <button
                   type="button"
                   className={styles.secondaryButton}
@@ -1029,11 +1182,11 @@ export default function ManagePage() {
                     })
                   }
                 >
-                  연락처 추가
+                  {copy.addContact}
                 </button>
               </div>
               <label className={styles.formField}>
-                <span>Contact Title</span>
+                <span>{copy.contactTitle}</span>
                 <textarea
                   value={current.contactTitle}
                   onChange={(event) => updateField("contactTitle", event.target.value)}
@@ -1041,7 +1194,7 @@ export default function ManagePage() {
                 />
               </label>
               <label className={styles.formField}>
-                <span>Primary Email</span>
+                <span>{copy.primaryEmail}</span>
                 <input
                   value={footerEmailItem?.value ?? ""}
                   onChange={(event) => updateFooterEmail(event.target.value)}
@@ -1051,17 +1204,17 @@ export default function ManagePage() {
               {nonEmailContactItems.map(({ item, index }) => (
                 <div key={`${item.label}-${item.value}-${index}`} className={styles.formGroup}>
                   <div className={styles.itemHeader}>
-                    <p className={styles.itemIndex}>연락처 {index + 1}</p>
+                    <p className={styles.itemIndex}>{copy.contactItem} {index + 1}</p>
                     <button
                       type="button"
                       className={styles.ghostButton}
                       onClick={() => removeArrayItem<ContactItem>("contactItems", index)}
                     >
-                      삭제
+                      {copy.remove}
                     </button>
                   </div>
                   <label className={styles.formField}>
-                    <span>Label</span>
+                    <span>{copy.label}</span>
                     <input
                       value={item.label}
                       onChange={(event) =>
@@ -1073,7 +1226,7 @@ export default function ManagePage() {
                     />
                   </label>
                   <label className={styles.formField}>
-                    <span>Value</span>
+                    <span>{copy.value}</span>
                     <input
                       value={item.value}
                       onChange={(event) =>
@@ -1085,7 +1238,7 @@ export default function ManagePage() {
                     />
                   </label>
                   <label className={styles.formField}>
-                    <span>Href</span>
+                    <span>{copy.href}</span>
                     <input
                       value={item.href ?? ""}
                       onChange={(event) =>
@@ -1101,23 +1254,23 @@ export default function ManagePage() {
             </article>
 
             <article className={styles.managePanel}>
-              <p className={styles.cardLabel}>푸터</p>
+              <p className={styles.cardLabel}>{copy.footer}</p>
               <label className={styles.formField}>
-                <span>Footer Name</span>
+                <span>{copy.footerName}</span>
                 <input
                   value={current.name}
                   onChange={(event) => updateField("name", event.target.value)}
                 />
               </label>
               <label className={styles.formField}>
-                <span>Footer Role</span>
+                <span>{copy.footerRole}</span>
                 <input
                   value={current.footerRole}
                   onChange={(event) => updateField("footerRole", event.target.value)}
                 />
               </label>
               <label className={styles.formField}>
-                <span>Copyright</span>
+                <span>{copy.copyright}</span>
                 <input
                   value={current.footerCopyright}
                   onChange={(event) => updateField("footerCopyright", event.target.value)}
@@ -1134,7 +1287,7 @@ export default function ManagePage() {
             onClick={() => void handleSave()}
             disabled={isSaving || isResetting || isLoading}
           >
-            {isSaving ? "Saving..." : "Save Changes"}
+            {isSaving ? copy.saving : copy.saveChanges}
           </button>
           <button
             type="button"
@@ -1142,7 +1295,7 @@ export default function ManagePage() {
             onClick={() => void handleReset()}
             disabled={isSaving || isResetting}
           >
-            {isResetting ? "Resetting..." : "Reset to Default"}
+            {isResetting ? copy.resetting : copy.resetDefault}
           </button>
         </div>
       </section>
