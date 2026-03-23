@@ -22,8 +22,8 @@ export default function PublicationsPage() {
             <div className={styles.publicationList}>
               {data.publications
                 .filter((item) => item.year === year)
-                .map((item) => (
-                  <article key={`${item.year}-${item.title}`} className={styles.listCard}>
+                .map((item, index) => (
+                  <article key={`publication-${year}-${index}`} className={styles.listCard}>
                     <div className={styles.metaRow}>
                       <span>{item.type}</span>
                       <span>{item.role}</span>

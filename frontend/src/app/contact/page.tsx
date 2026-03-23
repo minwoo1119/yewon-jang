@@ -10,14 +10,14 @@ export default function ContactPage() {
   return (
     <SiteShell>
       <section className={styles.section}>
-        <div className={styles.sectionHeading}>
+        <div className={`${styles.sectionHeading} ${styles.sectionHeadingWide}`}>
           <p className={styles.sectionEyebrow}>Contact</p>
           <h2>{data.contactTitle}</h2>
         </div>
 
         <div className={styles.contactGrid}>
-          {data.contactItems.map((item) => (
-            <article key={item.label} className={styles.contactItem}>
+          {data.contactItems.map((item, index) => (
+            <article key={`contact-card-${index}`} className={styles.contactItem}>
               <span>{item.label}</span>
               {item.href ? <a href={item.href}>{item.value}</a> : <p>{item.value}</p>}
             </article>

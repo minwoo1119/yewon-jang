@@ -16,8 +16,8 @@ export default function BackgroundPage() {
         </div>
 
         <div className={styles.timeline}>
-          {data.backgroundItems.map((item) => (
-            <article key={`${item.year}-${item.title}`} className={styles.timelineItem}>
+          {data.backgroundItems.map((item, index) => (
+            <article key={`background-entry-${index}`} className={styles.timelineItem}>
               <span className={styles.timelineYear}>{item.year}</span>
               <div>
                 <h3>{item.title}</h3>

@@ -10,14 +10,14 @@ export default function ProjectsPage() {
   return (
     <SiteShell>
       <section className={styles.section}>
-        <div className={styles.sectionHeading}>
+        <div className={`${styles.sectionHeading} ${styles.sectionHeadingWide}`}>
           <p className={styles.sectionEyebrow}>Research Projects</p>
           <h2>{data.projectsTitle}</h2>
         </div>
 
         <div className={styles.projectGrid}>
           {data.projects.map((project, index) => (
-            <article key={project.title} className={styles.projectCard}>
+            <article key={`project-card-${index}`} className={styles.projectCard}>
               <div
                 className={index % 2 === 0 ? styles.projectImage : styles.projectImageAlt}
                 style={

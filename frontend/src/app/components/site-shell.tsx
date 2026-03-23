@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import styles from "../page.module.css";
 import { usePortfolio } from "../portfolio-store";
 
@@ -11,6 +12,7 @@ type SiteShellProps = {
 
 export default function SiteShell({ children }: SiteShellProps) {
   const { data, locale, setLocale } = usePortfolio();
+  const pathname = usePathname();
   const [isLocaleOpen, setIsLocaleOpen] = useState(false);
   const localeMenuRef = useRef<HTMLDivElement | null>(null);
   const emailItem = data.contactItems.find((item) => {
@@ -59,7 +61,11 @@ export default function SiteShell({ children }: SiteShellProps) {
       <header className={styles.header}>
         <nav className={styles.nav}>
           {navItems.map((item) => (
-            <Link key={item.href} href={item.href}>
+            <Link
+              key={item.href}
+              href={item.href}
+              className={pathname === item.href ? styles.navLinkActive : styles.navLink}
+            >
               {item.label}
             </Link>
           ))}

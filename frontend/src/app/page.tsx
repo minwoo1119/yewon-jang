@@ -27,8 +27,8 @@ export default function Home() {
           <p className={styles.heroRole}>{data.heroRole}</p>
           <p className={styles.description}>{data.heroDescription}</p>
           <div className={styles.linkRow}>
-            {data.profileLinks.map((link) => (
-              <a key={link.label} href={link.href} className={styles.linkButton}>
+            {data.profileLinks.map((link, index) => (
+              <a key={`profile-link-${index}`} href={link.href} className={styles.linkButton}>
                 {link.label}
               </a>
             ))}
@@ -51,8 +51,8 @@ export default function Home() {
           <article className={styles.panel}>
             <p className={styles.cardLabel}>Interests</p>
             <ul className={styles.detailList}>
-              {data.interests.map((interest) => (
-                <li key={interest}>{interest}</li>
+              {data.interests.map((interest, index) => (
+                <li key={`interest-${index}`}>{interest}</li>
               ))}
             </ul>
           </article>
@@ -67,7 +67,7 @@ export default function Home() {
 
         <div className={styles.projectGrid}>
           {data.recentResearch.map((item, index) => (
-            <article key={item.title} className={styles.projectCard}>
+            <article key={`recent-research-card-${index}`} className={styles.projectCard}>
               <div
                 className={index % 2 === 0 ? styles.projectImage : styles.projectImageAlt}
                 aria-hidden="true"
@@ -89,8 +89,8 @@ export default function Home() {
         </div>
 
         <div className={styles.tagGroup}>
-          {data.skills.map((skill) => (
-            <span key={skill} className={styles.tag}>
+          {data.skills.map((skill, index) => (
+            <span key={`skill-${index}`} className={styles.tag}>
               {skill}
             </span>
           ))}

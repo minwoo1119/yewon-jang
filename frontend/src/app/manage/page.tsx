@@ -25,7 +25,6 @@ type ManageSection =
   | "publications"
   | "contact";
 
-  { id: "contact", label: "연락처·푸터" },
 const manageCopy = {
   ko: {
     authTitle: "관리 페이지 접근을 위해 비밀번호를 입력하세요.",
@@ -630,7 +629,7 @@ export default function ManagePage() {
                 </button>
               </div>
               {current.profileLinks.map((item, index) => (
-                <div key={`${item.label}-${index}`} className={styles.formGroup}>
+                <div key={`profile-link-${index}`} className={styles.formGroup}>
                   <div className={styles.itemHeader}>
                     <p className={styles.itemIndex}>{copy.linkItem} {index + 1}</p>
                     <button
@@ -787,7 +786,7 @@ export default function ManagePage() {
                 />
               </label>
               {current.recentResearch.map((item, index) => (
-                <div key={`${item.title}-${index}`} className={styles.formGroup}>
+                <div key={`recent-research-${index}`} className={styles.formGroup}>
                   <div className={styles.itemHeader}>
                     <p className={styles.itemIndex}>{copy.cardItem} {index + 1}</p>
                     <button
@@ -870,7 +869,7 @@ export default function ManagePage() {
                 />
               </label>
               {current.backgroundItems.map((item, index) => (
-                <div key={`${item.year}-${item.title}-${index}`} className={styles.formGroup}>
+                <div key={`background-item-${index}`} className={styles.formGroup}>
                   <div className={styles.itemHeader}>
                     <p className={styles.itemIndex}>{copy.timelineItem} {index + 1}</p>
                     <button
@@ -965,7 +964,7 @@ export default function ManagePage() {
                 />
               </label>
               {current.projects.map((item, index) => (
-                <div key={`${item.label}-${item.title}-${index}`} className={styles.formGroup}>
+                <div key={`project-${index}`} className={styles.formGroup}>
                   <div className={styles.itemHeader}>
                     <p className={styles.itemIndex}>{copy.projectItem} {index + 1}</p>
                     <button
@@ -1062,7 +1061,7 @@ export default function ManagePage() {
                 />
               </label>
               {current.publications.map((item, index) => (
-                <div key={`${item.year}-${item.title}-${index}`} className={styles.formGroup}>
+                <div key={`publication-${index}`} className={styles.formGroup}>
                   <div className={styles.itemHeader}>
                     <p className={styles.itemIndex}>{copy.publicationItem} {index + 1}</p>
                     <button
@@ -1202,7 +1201,7 @@ export default function ManagePage() {
                 />
               </label>
               {nonEmailContactItems.map(({ item, index }) => (
-                <div key={`${item.label}-${item.value}-${index}`} className={styles.formGroup}>
+                <div key={`contact-item-${index}`} className={styles.formGroup}>
                   <div className={styles.itemHeader}>
                     <p className={styles.itemIndex}>{copy.contactItem} {index + 1}</p>
                     <button
