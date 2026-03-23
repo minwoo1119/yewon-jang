@@ -29,15 +29,13 @@ const manageCopy = {
   ko: {
     authTitle: "관리 페이지 접근을 위해 비밀번호를 입력하세요.",
     authLead: "콘텐츠와 이미지를 수정하는 관리자 전용 화면입니다.",
-    authVerification: "백엔드 인증",
-    authSync: "Supabase 연동",
     accessPassword: "접근 비밀번호",
     enterPassword: "비밀번호를 입력하세요",
     checking: "확인 중...",
     enterDashboard: "관리 페이지 열기",
     heading: "섹션별로 내용을 나눠서 수정할 수 있도록 정리했습니다.",
     loading: "포트폴리오 데이터를 불러오는 중입니다.",
-    loginFailed: "로그인에 실패했습니다.",
+    loginFailed: "비밀번호가 올바르지 않습니다. 한/영 입력 상태를 확인해 주세요.",
     saveFailed: "저장에 실패했습니다.",
     resetFailed: "초기화에 실패했습니다.",
     uploadFailed: "이미지 업로드에 실패했습니다.",
@@ -120,15 +118,13 @@ const manageCopy = {
   en: {
     authTitle: "Enter the password to access the admin page.",
     authLead: "This is the admin screen for editing content and images.",
-    authVerification: "Backend verification",
-    authSync: "Supabase sync",
     accessPassword: "Access Password",
     enterPassword: "Enter password",
     checking: "Checking...",
     enterDashboard: "Enter Dashboard",
     heading: "섹션별로 내용을 나눠서 수정할 수 있도록 정리했습니다.",
     loading: "Loading portfolio data.",
-    loginFailed: "Failed to log in.",
+    loginFailed: "Incorrect password. Check your keyboard language and try again.",
     saveFailed: "Failed to save changes.",
     resetFailed: "Failed to reset content.",
     uploadFailed: "Failed to upload image.",
@@ -505,12 +501,6 @@ export default function ManagePage() {
               <h2>{authCopy.authTitle}</h2>
               <p className={styles.authLead}>{authCopy.authLead}</p>
             </div>
-
-            <div className={styles.authSubcopy}>
-              <span>{authCopy.authVerification}</span>
-              <span>{authCopy.authSync}</span>
-            </div>
-
             <form className={styles.authPanel} onSubmit={handleUnlock}>
               <label className={styles.authField}>
                 <span>{authCopy.accessPassword}</span>

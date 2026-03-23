@@ -1,0 +1,22 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#F4F6F8"/>
+  <rect x="52" y="52" width="1096" height="526" rx="28" fill="#FBFCFD" stroke="#D7DDE3"/>
+  <rect x="96" y="96" width="120" height="120" rx="24" fill="#1B263B"/>
+  <path d="M129 129H153.5L171 158L188.5 129H213L178.2 184V219H163.8V184L129 129Z" fill="#F8F9FA"/>
+  <text x="96" y="298" fill="#1B263B" font-family="Georgia, 'Times New Roman', serif" font-size="64" font-weight="700">
+    Yewon Jang
+  </text>
+  <text x="96" y="354" fill="#51606F" font-family="Arial, sans-serif" font-size="28">
+    Research Portfolio
+  </text>
+  <text x="96" y="428" fill="#233142" font-family="Arial, sans-serif" font-size="34" font-weight="600">
+    Projects, publications, background, and contact
+  </text>
+  <text x="96" y="474" fill="#5F6B78" font-family="Arial, sans-serif" font-size="28">
+    Materials, advanced manufacturing, and mechanical systems
+  </text>
+  <line x1="96" y1="520" x2="1104" y2="520" stroke="#D7DDE3"/>
+  <text x="96" y="553" fill="#6A7684" font-family="Arial, sans-serif" font-size="24">
+    yewon.duckdns.org
+  </text>
+</svg>

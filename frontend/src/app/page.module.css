@@ -655,25 +655,6 @@
   color: var(--text-muted);
 }
 
-.authSubcopy {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.authSubcopy span {
-  display: inline-flex;
-  align-items: center;
-  min-height: 30px;
-  padding: 0 10px;
-  border: 1px solid rgba(54, 70, 93, 0.12);
-  border-radius: 999px;
-  font-size: 0.78rem;
-  letter-spacing: 0.04em;
-  color: var(--text-muted);
-  background: rgba(255, 255, 255, 0.72);
-}
-
 .authPanel {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
